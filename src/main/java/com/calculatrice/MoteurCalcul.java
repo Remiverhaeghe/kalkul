@@ -1,11 +1,24 @@
 package com.calculatrice;
 
+import java.math.BigDecimal;
+import java.math.MathContext;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  * Logique de la calculatrice, sans dépendance à Swing pour pouvoir être testée.
  * L'interface lui transmet chaque touche et affiche le texte qu'elle renvoie.
  */
 public class MoteurCalcul {
     public static final String ERREUR = "ERREUR";
+
+    // Fonctions à un seul nombre, appliquées tout de suite à l'écran
+    private static final Set<String> UNARY_FUNCTIONS = new HashSet<>(
+            Arrays.asList("x²", "√", "sin", "cos", "tan", "asin", "acos", "atan", "exp", "ln", "log", "n!"));
+
+    // Chiffres significatifs gardés à l'affichage : masque les erreurs d'arrondi (0,1 + 0,2)
+    private static final int DISPLAY_DIGITS = 12;
 
     // Texte affiché à l'écran
     private String aDisplay = "0";
@@ -15,6 +28,17 @@ public class MoteurCalcul {
     private String aOperator = "";
     // Vrai quand la prochaine touche chiffre commence un nouveau nombre
     private boolean aStartNewNumber = true;
+    // Angles en degrés (vrai) ou en radians (faux) pour les fonctions trigonométriques
+    private boolean aDegrees = true;
+
+    public void setDegrees(boolean pDegrees) {
+        aDegrees = pDegrees;
+    }
+
+    public boolean isDegrees() {
+        boolean rDegrees = aDegrees;
+        return rDegrees;
+    }
 
     public String getDisplay() {
         String rDisplay = aDisplay;
@@ -31,8 +55,11 @@ public class MoteurCalcul {
             numberPressed(pInput);
         } else if (".".equals(pInput)) {
             dotPressed();
-        } else if ("+".equals(pInput) || "-".equals(pInput) || "*".equals(pInput) || "/".equals(pInput)) {
+        } else if ("+".equals(pInput) || "-".equals(pInput) || "*".equals(pInput) || "/".equals(pInput)
+                || "^".equals(pInput) || "mod".equals(pInput)) {
             operatorPressed(pInput);
+        } else if (UNARY_FUNCTIONS.contains(pInput)) {
+            unaryPressed(pInput);
         } else if ("=".equals(pInput) || "\n".equals(pInput) || "\r".equals(pInput)) {
             equalPressed();
         } else if ("C".equals(pInput) || "c".equals(pInput)) {
@@ -41,7 +68,7 @@ public class MoteurCalcul {
             plusMinus();
         } else if ("%".equals(pInput)) {
             percent();
-        } else if ("\b".equals(pInput)) {
+        } else if ("\b".equals(pInput) || "⌫".equals(pInput)) {
             backspace();
         }
     }
@@ -74,6 +101,16 @@ public class MoteurCalcul {
             }
             aOperator = pOperator;
             aDisplay = trimZeros(aOperand);
+            aStartNewNumber = true;
+        } catch (RuntimeException vException) {
+            showError();
+        }
+    }
+
+    private void unaryPressed(String pName) {
+        try {
+            double vResult = FonctionsScientifiques.apply(pName, Double.parseDouble(aDisplay), aDegrees);
+            aDisplay = trimZeros(vResult);
             aStartNewNumber = true;
         } catch (RuntimeException vException) {
             showError();
@@ -113,6 +150,18 @@ public class MoteurCalcul {
                     throw new ArithmeticException("Division par zéro impossible");
                 }
                 rResult = pLeft / pRight;
+                break;
+            case "mod":
+                if (pRight == 0) {
+                    throw new ArithmeticException("Division par zéro impossible");
+                }
+                rResult = pLeft % pRight;
+                break;
+            case "^":
+                rResult = Math.pow(pLeft, pRight);
+                if (Double.isNaN(rResult) || Double.isInfinite(rResult)) {
+                    throw new ArithmeticException("Puissance impossible");
+                }
                 break;
             default:
                 rResult = pRight;
@@ -161,12 +210,11 @@ public class MoteurCalcul {
     }
 
     static String trimZeros(double pValue) {
-        String rText;
-        if (pValue == (long) pValue) {
-            rText = String.format("%d", (long) pValue);
-        } else {
-            rText = String.valueOf(pValue);
-        }
+        // BigDecimal lève une NumberFormatException pour NaN et l'infini : l'appelant affiche ERREUR
+        String rText = new BigDecimal(pValue)
+                .round(new MathContext(DISPLAY_DIGITS))
+                .stripTrailingZeros()
+                .toPlainString();
         return rText;
     }
 }
