@@ -54,7 +54,7 @@ public class CalculatriceIntelligente extends JFrame {
         super("Calculatrice");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(460, 600);
+        setSize(560, 700);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout(5, 5));
 
@@ -70,6 +70,7 @@ public class CalculatriceIntelligente extends JFrame {
         JTabbedPane vTabs = new JTabbedPane();
         vTabs.addTab("Base", new PanneauTouches(BASE_KEYS, 4, this::send));
         vTabs.addTab("Scientifique", buildScientificTab());
+        vTabs.addTab("Financier", new PanneauFinance());
         vTabs.addTab("Outils", new PanneauOutils());
         // Les touches du clavier ne doivent pas être volées par la navigation entre onglets
         vTabs.setFocusable(false);
