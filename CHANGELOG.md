@@ -3,7 +3,8 @@
 ## Non publié
 
 ### Fonctionnalités
-- Onglets Base, Scientifique et Outils
+- Onglets Base, Scientifique, Financier et Outils
+- Onglet Financier : intérêts simples et composés, prêt avec tableau d'amortissement, VAN, TRI, trésorerie cumulée et délai de retour, conversion monétaire à taux saisi
 - Carré, racine carrée, reste et puissance
 - Trigonométrie et réciproques en degrés ou en radians, exp, ln, log, factorielle
 - Statistiques de base, équation du second degré, conversion d'unités

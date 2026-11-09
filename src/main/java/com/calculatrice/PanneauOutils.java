@@ -85,7 +85,7 @@ class PanneauOutils extends JPanel {
     }
 
     // Bouton qui affiche le texte renvoyé par le calcul, ou le message de l'erreur
-    private static JButton button(String pLabel, JLabel pResult, Supplier<String> pCalculation) {
+    static JButton button(String pLabel, JLabel pResult, Supplier<String> pCalculation) {
         JButton rButton = new JButton(pLabel);
         rButton.addActionListener(pEvent -> {
             try {
@@ -97,13 +97,13 @@ class PanneauOutils extends JPanel {
         return rButton;
     }
 
-    private static JPanel section(String pTitle) {
+    static JPanel section(String pTitle) {
         JPanel rSection = new JPanel(new GridLayout(0, 1, 4, 4));
         rSection.setBorder(BorderFactory.createTitledBorder(pTitle));
         return rSection;
     }
 
-    private static JPanel row(java.awt.Component... pComponents) {
+    static JPanel row(java.awt.Component... pComponents) {
         JPanel rRow = new JPanel(new FlowLayout(FlowLayout.LEFT, 4, 0));
         for (java.awt.Component vComponent : pComponents) {
             rRow.add(vComponent);
@@ -111,7 +111,7 @@ class PanneauOutils extends JPanel {
         return rRow;
     }
 
-    private static String format(double pValue) {
+    static String format(double pValue) {
         return MoteurCalcul.trimZeros(pValue);
     }
 }
