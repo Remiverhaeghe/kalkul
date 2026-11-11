@@ -1,4 +1,4 @@
-package com.calculatrice;
+package com.kalkul;
 
 /**
  * Formules financières de la calculatrice, sans dépendance à Swing.

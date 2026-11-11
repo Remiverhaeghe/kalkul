@@ -1,4 +1,4 @@
-# Calculatrice intelligente
+# Kalkul
 
 Calculatrice de bureau en Java Swing, avec un onglet par famille de calculs. Le clavier fonctionne comme les boutons.
 
@@ -25,7 +25,7 @@ Pour produire un JAR exécutable :
 
 ```bash
 mvn package
-java -jar target/calculatrice-intelligente-1.0-SNAPSHOT.jar
+java -jar target/kalkul-1.0-SNAPSHOT.jar
 ```
 
 ## Tests
@@ -43,7 +43,7 @@ mvn verify
 | `Conversions.java` | Conversion d'unités |
 | `FormulesFinancieres.java` | Intérêts, prêt, amortissement, VAN, TRI, trésorerie |
 | `PanneauFinance.java` | Formulaires de l'onglet Financier |
-| `CalculatriceIntelligente.java` | Fenêtre, onglets et clavier ; transmet chaque touche au moteur |
+| `Kalkul.java` | Fenêtre, onglets et clavier ; transmet chaque touche au moteur |
 | `PanneauTouches.java` | Grille de boutons réutilisée par les onglets Base et Scientifique |
 | `PanneauOutils.java` | Formulaires de l'onglet Outils |
 | `src/test/java/...` | Tests du moteur, des fonctions et des conversions |

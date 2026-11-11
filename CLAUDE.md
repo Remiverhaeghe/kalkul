@@ -1,4 +1,4 @@
-# Calculatrice intelligente
+# Kalkul
 
 Calculatrice Swing en Java 17 et Maven. Suivre les conventions de Rémi (skill `conventions-remi`) : préfixes p/v/r/a, commentaires en français. Toujours répondre en français.
 

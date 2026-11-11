@@ -12,7 +12,7 @@
 
 ### Technique
 - Moteur de calcul séparé de l'interface Swing, avec tests JUnit 5
-- Package et classes renommés sans faute (`com.calculatrice`, `CalculatriceIntelligente`)
+- Projet renommé Kalkul (package `com.kalkul`, classe `Kalkul`)
 - Classe principale du `pom.xml` corrigée : `mvn exec:java` et le JAR exécutable démarraient sur un nom qui n'existait pas
 - Intégration continue GitHub Actions et Dependabot
 
