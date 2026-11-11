@@ -112,6 +112,6 @@ class PanneauOutils extends JPanel {
     }
 
     static String format(double pValue) {
-        return MoteurCalcul.trimZeros(pValue);
+        return Affichage.format(pValue);
     }
 }

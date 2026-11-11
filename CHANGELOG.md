@@ -3,7 +3,10 @@
 ## Non publié
 
 ### Fonctionnalités
-- Onglets Base, Scientifique, Financier et Outils
+- Onglets Base, Scientifique, Financier, Graphique et Outils
+- Onglet Graphique : tracé de courbes en Java2D, formules avec variables et paramètres, tangente, dérivée, intégrale et aire sous la courbe
+- Matrices : somme, différence, produit, transposée, déterminant, inverse, résolution de systèmes, produits scalaire et vectoriel, norme
+- Régression linéaire avec corrélation, r² et p-value de la pente (loi de Student)
 - Onglet Financier : intérêts simples et composés, prêt avec tableau d'amortissement, VAN, TRI, trésorerie cumulée et délai de retour, conversion monétaire à taux saisi
 - Carré, racine carrée, reste et puissance
 - Trigonométrie et réciproques en degrés ou en radians, exp, ln, log, factorielle
