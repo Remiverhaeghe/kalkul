@@ -1,4 +1,4 @@
-package com.calculatrice;
+package com.kalkul;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;

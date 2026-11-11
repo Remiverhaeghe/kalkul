@@ -1,4 +1,4 @@
-package com.calculatrice;
+package com.kalkul;
 
 import java.awt.FlowLayout;
 import java.awt.GridLayout;

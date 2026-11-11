@@ -1,4 +1,4 @@
-package com.calculatrice;
+package com.kalkul;
 
 import java.awt.BorderLayout;
 import java.awt.Font;
@@ -22,7 +22,7 @@ import javax.swing.SwingUtilities;
  * Fenêtre Swing de la calculatrice : boutons, écran et clavier.
  * Tout le calcul est dans {@link MoteurCalcul}.
  */
-public class CalculatriceIntelligente extends JFrame {
+public class Kalkul extends JFrame {
     private static final long serialVersionUID = 1L;
 
     private static final String[] BASE_KEYS = {
@@ -50,8 +50,8 @@ public class CalculatriceIntelligente extends JFrame {
     private final transient MoteurCalcul aEngine = new MoteurCalcul();
     private final JTextField aDisplay;
 
-    public CalculatriceIntelligente() {
-        super("Calculatrice");
+    public Kalkul() {
+        super("Kalkul");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setSize(560, 700);
@@ -120,6 +120,6 @@ public class CalculatriceIntelligente extends JFrame {
     }
 
     public static void main(String[] pArgs) {
-        SwingUtilities.invokeLater(CalculatriceIntelligente::new);
+        SwingUtilities.invokeLater(Kalkul::new);
     }
 }
