@@ -53,4 +53,22 @@ class EchantillonCourbeTest {
         assertEquals(10, EchantillonCourbe.niceStep(100), 1e-12);
         assertEquals(0.5, EchantillonCourbe.niceStep(4), 1e-12);
     }
+
+    @Test
+    void scatterFramesTheLineAndEveryPoint() {
+        double[] vX = {0, 10};
+        double[] vY = {0, 10};
+        // Le point (10 ; 10) est loin de la droite y = 1 : il doit rester dans le cadre
+        EchantillonCourbe vSample = EchantillonCourbe.scatter(vX, vY, x -> 1, 20);
+        assertEquals(-0.5, vSample.xMin(), 1e-12);
+        assertEquals(10.5, vSample.xMax(), 1e-12);
+        assertTrue(vSample.yMin() < 0 && vSample.yMax() > 10);
+        assertEquals(1, vSample.y(7), 1e-12);
+    }
+
+    @Test
+    void scatterNeedsTwoDifferentX() {
+        assertThrows(IllegalArgumentException.class,
+                () -> EchantillonCourbe.scatter(new double[] {3, 3}, new double[] {1, 2}, x -> x, 20));
+    }
 }
