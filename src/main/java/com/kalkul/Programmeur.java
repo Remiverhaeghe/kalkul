@@ -53,7 +53,8 @@ final class Programmeur {
     }
 
     /**
-     * Écrit une valeur en base pBase : signée en décimal, en complément à deux sinon, binaire complet groupé par 4.
+     * Écrit une valeur en base pBase : signée en décimal, en complément à deux sinon,
+     * binaire complet groupé par 4.
      */
     static String ecrire(long pValeur, int pBase, int pBits) {
         long vValeur = borner(pValeur, pBits);
