@@ -222,6 +222,24 @@ public class MoteurCalcul {
         }
     }
 
+    /**
+     * Affiche un résultat calculé ailleurs (une formule enregistrée) et le garde dans l'historique.
+     */
+    public void afficherResultat(String pExpression, double pResult) {
+        try {
+            aDisplay = trimZeros(pResult);
+            aStartNewNumber = true;
+            record(pExpression, aDisplay);
+        } catch (RuntimeException vException) {
+            showError();
+        }
+    }
+
+    /** Affiche ERREUR, comme après un calcul impossible. */
+    public void afficherErreur() {
+        showError();
+    }
+
     static double calculate(double pLeft, double pRight, String pOperator) {
         double rResult;
         switch (pOperator) {

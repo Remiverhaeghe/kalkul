@@ -3,6 +3,7 @@
 ## Non publié
 
 ### Fonctionnalités
+- Formules enregistrées dans l'onglet Graphique, gardées d'une session à l'autre et appliquées au nombre de l'écran depuis l'onglet Scientifique
 - Onglet Chantier : paquets de revêtement avec chutes, béton d'une dalle, pente et dénivelé
 - Unités de chantier : surfaces, m³, tonne, brouette, pente en %, mm/m et degrés
 - Onglets sur une seule rangée, fenêtre de 800 px
