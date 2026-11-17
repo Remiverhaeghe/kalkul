@@ -23,6 +23,8 @@ class Ecran extends JComponent {
 
     private String aValeur = "0";
     private String aMode = "DEG";
+    // Calcul qui a donné le nombre affiché, en petit au-dessus
+    private String aRappel = "";
 
     Ecran() {
         setPreferredSize(new Dimension(400, 104));
@@ -32,6 +34,15 @@ class Ecran extends JComponent {
         aValeur = pValeur;
         aMode = pDegres ? "DEG" : "RAD";
         repaint();
+    }
+
+    void rappel(String pRappel) {
+        aRappel = pRappel;
+        repaint();
+    }
+
+    String rappel() {
+        return aRappel;
     }
 
     String valeur() {
@@ -68,6 +79,11 @@ class Ecran extends JComponent {
         vG.setFont(Habillage.texte(Font.BOLD, 11));
         vG.setColor(Habillage.MODE_ECRAN);
         vG.drawString(aMode, MARGE + 4, 30);
+        if (!aRappel.isEmpty()) {
+            vG.setFont(Habillage.chiffres(Font.PLAIN, 14));
+            vG.setColor(Habillage.MODE_ECRAN);
+            vG.drawString(aRappel, getWidth() - MARGE - 4 - vG.getFontMetrics().stringWidth(aRappel), 31);
+        }
 
         int vLargeur = getWidth() - 2 * MARGE - 8;
         Font vChiffres = Habillage.chiffres(Font.PLAIN, tailleQuiTient(vG, vLargeur));
