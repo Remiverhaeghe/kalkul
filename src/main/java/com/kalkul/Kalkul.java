@@ -52,7 +52,7 @@ public class Kalkul extends JFrame {
         super("Kalkul");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(640, 780);
+        setSize(720, 780);
         setLocationRelativeTo(null);
         getContentPane().setBackground(Habillage.FOND);
         setLayout(new BorderLayout(0, 4));
@@ -65,6 +65,7 @@ public class Kalkul extends JFrame {
         vTabs.addTab("Scientifique", buildScientificTab());
         vTabs.addTab("Financier", new PanneauFinance());
         vTabs.addTab("Graphique", new PanneauGraphique());
+        vTabs.addTab("Programmeur", new PanneauProgrammeur());
         vTabs.addTab("Outils", new PanneauOutils());
         vTabs.addTab("Historique", aHistory);
         // Les touches du clavier ne doivent pas être volées par la navigation entre onglets

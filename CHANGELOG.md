@@ -3,6 +3,7 @@
 ## Non publié
 
 ### Fonctionnalités
+- Onglet Programmeur : entiers de 8 à 64 bits en bases 16, 10, 8 et 2, opérations bit à bit, décalages, complément à deux
 - Historique des 50 derniers calculs dans un onglet, résultat repris d'un double-clic, rappel du calcul en petit sur l'écran
 - Thème clair qui suit le réglage des applications de Windows, ou imposé par `-Dkalkul.theme=clair|sombre`
 - Nouvel habillage : fond graphite, écran à chiffres cyan avec le mode d'angle, touches arrondies colorées par rôle (chiffres, opérateurs ambre, « = » plein, effacement rouge brique), signes ÷ × −, graphique sur fond sombre
