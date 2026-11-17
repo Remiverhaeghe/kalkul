@@ -25,6 +25,10 @@ L'onglet Chantier compte les paquets de revêtement avec la marge de chute, le b
 
 <img src="docs/chantier.png" alt="Onglet Chantier : paquets de revêtement, béton d'une dalle et dénivelé" width="460">
 
+Une formule de l'onglet Graphique s'enregistre avec ses paramètres (20 au plus, gardées d'une session à l'autre dans les préférences Java de l'utilisateur). Elle se retrouve dans l'onglet Scientifique, où « f(écran) » l'applique au nombre affiché : le calcul s'écrit avec ses nombres (`2*3 + 1`) et part dans l'historique.
+
+<img src="docs/formule-ecran.png" alt="Onglet Scientifique : la formule a*x + b appliquée à 3 donne 7" width="460">
+
 | Onglet | Contenu |
 |---|---|
 | Base | Quatre opérations, reste (`mod`), pourcentage, carré, racine carrée, changement de signe, retour arrière |

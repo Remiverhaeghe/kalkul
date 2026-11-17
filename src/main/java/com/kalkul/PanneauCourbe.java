@@ -11,7 +11,8 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * Sous-onglet Courbes : formule avec variables, tracé, tangente en un point et aire sous la courbe.
+ * Sous-onglet Courbes : formule avec variables, tracé, tangente en un point et aire sous la courbe,
+ * formules enregistrées dans le {@link CarnetFormules}.
  * Le calcul est fait par {@link Expression}, {@link Analyse} et {@link EchantillonCourbe}.
  */
 class PanneauCourbe extends JPanel {
@@ -28,11 +29,34 @@ class PanneauCourbe extends JPanel {
     private final JLabel aResult = new JLabel(" ");
     private final TraceCourbe aPlot = new TraceCourbe();
 
-    PanneauCourbe() {
+    PanneauCourbe(CarnetFormules pCarnet) {
         setLayout(new BorderLayout(4, 4));
 
         JPanel vForm = new JPanel(new GridLayout(0, 1, 2, 2));
         vForm.setBorder(BorderFactory.createEmptyBorder(4, 4, 0, 4));
+        ChoixFormule vSaved = new ChoixFormule(pCarnet);
+        vSaved.addActionListener(pEvent -> {
+            if (!vSaved.enRemplissage() && vSaved.choisie() != null) {
+                aFormula.setText(vSaved.choisie().formule());
+                aParameters.setText(vSaved.choisie().parametres());
+            }
+        });
+        JButton vSave = new JButton("Enregistrer");
+        vSave.addActionListener(pEvent -> {
+            try {
+                pCarnet.enregistrer(aFormula.getText(), aParameters.getText());
+                aResult.setText("Formule enregistrée : elle s'applique aussi au nombre de l'écran, onglet Scientifique.");
+            } catch (RuntimeException vException) {
+                aResult.setText(MoteurCalcul.ERREUR + " : " + vException.getMessage());
+            }
+        });
+        JButton vRemove = new JButton("Retirer");
+        vRemove.addActionListener(pEvent -> {
+            if (vSaved.choisie() != null) {
+                pCarnet.supprimer(vSaved.choisie());
+            }
+        });
+        vForm.add(PanneauOutils.row(new JLabel("Formules enregistrées"), vSaved, vSave, vRemove));
         vForm.add(PanneauOutils.row(new JLabel("f(x) ="), aFormula, new JLabel("paramètres"), aParameters));
         vForm.add(PanneauOutils.row(new JLabel("x de"), aXMin, new JLabel("à"), aXMax,
                 new JLabel("tangente en x ="), aPoint));

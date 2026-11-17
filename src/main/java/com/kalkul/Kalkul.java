@@ -14,6 +14,7 @@ import javax.swing.JTabbedPane;
 import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
 import javax.swing.SwingUtilities;
+import java.util.prefs.Preferences;
 
 /**
  * Fenêtre Swing de la calculatrice : boutons, écran et clavier.
@@ -46,6 +47,8 @@ public class Kalkul extends JFrame {
 
     private final transient MoteurCalcul aEngine = new MoteurCalcul();
     private final Ecran aDisplay = new Ecran();
+    private final transient CarnetFormules aFormulas =
+            CarnetFormules.depuis(Preferences.userNodeForPackage(Kalkul.class));
     private final PanneauHistorique aHistory = new PanneauHistorique(this::reuse, aEngine::effacerHistorique);
 
     public Kalkul() {
@@ -65,7 +68,7 @@ public class Kalkul extends JFrame {
         vTabs.addTab("Base", new PanneauTouches(BASE_KEYS, 4, this::send));
         vTabs.addTab("Scientifique", buildScientificTab());
         vTabs.addTab("Financier", new PanneauFinance());
-        vTabs.addTab("Graphique", new PanneauGraphique());
+        vTabs.addTab("Graphique", new PanneauGraphique(aFormulas));
         vTabs.addTab("Programmeur", new PanneauProgrammeur());
         vTabs.addTab("Chantier", new PanneauChantier());
         vTabs.addTab("Outils", new PanneauOutils());
@@ -100,7 +103,50 @@ public class Kalkul extends JFrame {
         rPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
         rPanel.add(vAngle, BorderLayout.NORTH);
         rPanel.add(new PanneauTouches(SCIENTIFIC_KEYS, 6, this::send), BorderLayout.CENTER);
+        rPanel.add(buildFormulaRow(), BorderLayout.SOUTH);
         return rPanel;
+    }
+
+    /**
+     * Ligne qui applique une formule enregistrée dans l'onglet Graphique au nombre de l'écran.
+     */
+    private JPanel buildFormulaRow() {
+        ChoixFormule vChoice = new ChoixFormule(aFormulas);
+        javax.swing.JButton vApply = new javax.swing.JButton("f(écran)");
+        vApply.setFocusable(false);
+        javax.swing.JLabel vHint = new javax.swing.JLabel();
+        vHint.setForeground(Habillage.TEXTE_DOUX);
+        Runnable vRefresh = () -> {
+            boolean vAny = !aFormulas.liste().isEmpty();
+            vChoice.setEnabled(vAny);
+            vApply.setEnabled(vAny);
+            vHint.setText(vAny ? "" : "Enregistre une formule dans l'onglet Graphique pour l'appliquer ici.");
+        };
+        aFormulas.ecouter(vRefresh);
+        vRefresh.run();
+        vApply.addActionListener(pEvent -> applyFormula(vChoice.choisie()));
+
+        JPanel rRow = PanneauOutils.row(new javax.swing.JLabel("f(x) ="), vChoice, vApply, vHint);
+        rRow.setOpaque(false);
+        rRow.setBorder(BorderFactory.createEmptyBorder(0, 10, 10, 10));
+        return rRow;
+    }
+
+    private void applyFormula(CarnetFormules.Formule pFormula) {
+        if (pFormula == null) {
+            return;
+        }
+        String vX = aEngine.getDisplay();
+        try {
+            double vResult = CarnetFormules.appliquer(pFormula, Double.parseDouble(vX));
+            aEngine.afficherResultat(CarnetFormules.ecrire(pFormula, Double.parseDouble(vX)), vResult);
+            aDisplay.rappel(aEngine.getHistorique().get(0).expression() + " =");
+            aHistory.montrer(aEngine.getHistorique());
+        } catch (RuntimeException vException) {
+            aEngine.afficherErreur();
+            aDisplay.rappel("");
+        }
+        aDisplay.afficher(aEngine.getDisplay(), aEngine.isDegrees());
     }
 
     private void send(String pInput) {
