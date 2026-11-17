@@ -62,11 +62,11 @@ class Ecran extends JComponent {
         vG.setColor(Habillage.ECRAN);
         vG.fill(vCadre);
         vG.setStroke(new BasicStroke(1.5f));
-        vG.setColor(new Color(0x2A3338));
+        vG.setColor(Habillage.CADRE_ECRAN);
         vG.draw(vCadre);
 
         vG.setFont(Habillage.texte(Font.BOLD, 11));
-        vG.setColor(new Color(0x3E8E92));
+        vG.setColor(Habillage.MODE_ECRAN);
         vG.drawString(aMode, MARGE + 4, 30);
 
         int vLargeur = getWidth() - 2 * MARGE - 8;
@@ -80,7 +80,7 @@ class Ecran extends JComponent {
                 Habillage.CHIFFRES.getBlue(), 40));
         vG.drawString(aValeur, vX + 1, vY + 1);
         vG.drawString(aValeur, vX - 1, vY - 1);
-        vG.setColor(MoteurCalcul.ERREUR.equals(aValeur) ? new Color(0xFF8A7A) : Habillage.CHIFFRES);
+        vG.setColor(MoteurCalcul.ERREUR.equals(aValeur) ? Habillage.ERREUR_ECRAN : Habillage.CHIFFRES);
         vG.drawString(aValeur, vX, vY);
         vG.dispose();
     }
