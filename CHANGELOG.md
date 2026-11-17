@@ -3,6 +3,7 @@
 ## Non publié
 
 ### Fonctionnalités
+- Nouvel habillage : fond graphite, écran à chiffres cyan avec le mode d'angle, touches arrondies colorées par rôle (chiffres, opérateurs ambre, « = » plein, effacement rouge brique), signes ÷ × −, graphique sur fond sombre
 - Paquets avec Java embarqué par jpackage : dossier Windows zippé et `.deb` Linux, produits par le workflow « Paquets »
 - Onglets Base, Scientifique, Financier, Graphique et Outils
 - Onglet Graphique : tracé de courbes en Java2D, formules avec variables et paramètres, tangente, dérivée, intégrale et aire sous la courbe
