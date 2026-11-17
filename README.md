@@ -21,6 +21,10 @@ L'onglet Programmeur travaille sur des entiers de 8 à 64 bits : saisie en hexad
 
 <img src="docs/programmeur.png" alt="Onglet Programmeur : FF affiché en hexadécimal, décimal, octal et binaire" width="420">
 
+L'onglet Chantier compte les paquets de revêtement avec la marge de chute, le béton d'une dalle (ciment en sacs, sable, gravillons, eau) et la pente d'une évacuation. Les conversions de l'onglet Outils gagnent les surfaces, les m³, la tonne, la brouette et la pente en %, mm/m ou degrés.
+
+<img src="docs/chantier.png" alt="Onglet Chantier : paquets de revêtement, béton d'une dalle et dénivelé" width="460">
+
 | Onglet | Contenu |
 |---|---|
 | Base | Quatre opérations, reste (`mod`), pourcentage, carré, racine carrée, changement de signe, retour arrière |
