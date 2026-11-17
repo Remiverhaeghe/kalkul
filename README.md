@@ -17,6 +17,10 @@ L'onglet Historique garde les 50 derniers calculs ; un double-clic remet le rés
 
 <img src="docs/historique.png" alt="Onglet Historique : liste des calculs et rappel du dernier calcul sur l'écran" width="360">
 
+L'onglet Programmeur travaille sur des entiers de 8 à 64 bits : saisie en hexadécimal, décimal, octal ou binaire, résultat dans les quatre bases, AND, OR, XOR, NOT, décalages et les quatre opérations, négatifs en complément à deux.
+
+<img src="docs/programmeur.png" alt="Onglet Programmeur : FF affiché en hexadécimal, décimal, octal et binaire" width="420">
+
 | Onglet | Contenu |
 |---|---|
 | Base | Quatre opérations, reste (`mod`), pourcentage, carré, racine carrée, changement de signe, retour arrière |
