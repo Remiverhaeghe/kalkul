@@ -5,6 +5,9 @@ on:
   workflow_dispatch:
   push:
     tags: ["v*"]
+  # Essai du workflow lui-même quand il change
+  pull_request:
+    paths: [".github/workflows/paquets.yml"]
 
 permissions:
   contents: read
