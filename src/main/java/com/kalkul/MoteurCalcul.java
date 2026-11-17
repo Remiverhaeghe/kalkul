@@ -2,8 +2,13 @@ package com.kalkul;
 
 import java.math.BigDecimal;
 import java.math.MathContext;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Deque;
 import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -16,6 +21,16 @@ public class MoteurCalcul {
     // Fonctions à un seul nombre, appliquées tout de suite à l'écran
     private static final Set<String> UNARY_FUNCTIONS = new HashSet<>(
             Arrays.asList("x²", "√", "sin", "cos", "tan", "asin", "acos", "atan", "exp", "ln", "log", "n!"));
+
+    /** Calculs gardés dans l'historique, les plus anciens sortent en premier. */
+    public static final int HISTORIQUE_MAX = 50;
+
+    // Signes affichés dans l'historique
+    private static final Map<String, String> SIGNS = Map.of("/", "÷", "*", "×", "-", "−");
+
+    /** Un calcul terminé : ce qui a été tapé et le résultat. */
+    public record Calcul(String expression, String resultat) {
+    }
 
     // Chiffres significatifs gardés à l'affichage : masque les erreurs d'arrondi (0,1 + 0,2)
     private static final int DISPLAY_DIGITS = 12;
@@ -30,6 +45,10 @@ public class MoteurCalcul {
     private boolean aStartNewNumber = true;
     // Angles en degrés (vrai) ou en radians (faux) pour les fonctions trigonométriques
     private boolean aDegrees = true;
+    // Calculs terminés, le plus récent en tête
+    private final Deque<Calcul> aHistory = new ArrayDeque<>();
+    // Calcul terminé par la dernière touche, null sinon
+    private Calcul aLastCalculation;
 
     public void setDegrees(boolean pDegrees) {
         aDegrees = pDegrees;
@@ -51,6 +70,7 @@ public class MoteurCalcul {
      * @param pInput texte de la touche
      */
     public void handleInput(String pInput) {
+        aLastCalculation = null;
         if (pInput.matches("[0-9]")) {
             numberPressed(pInput);
         } else if (".".equals(pInput)) {
@@ -109,9 +129,11 @@ public class MoteurCalcul {
 
     private void unaryPressed(String pName) {
         try {
-            double vResult = FonctionsScientifiques.apply(pName, Double.parseDouble(aDisplay), aDegrees);
+            double vValue = Double.parseDouble(aDisplay);
+            double vResult = FonctionsScientifiques.apply(pName, vValue, aDegrees);
             aDisplay = trimZeros(vResult);
             aStartNewNumber = true;
+            record(unaryExpression(pName, trimZeros(vValue)), aDisplay);
         } catch (RuntimeException vException) {
             showError();
         }
@@ -124,12 +146,79 @@ public class MoteurCalcul {
         try {
             double vCurrent = Double.parseDouble(aDisplay);
             double vResult = calculate(aOperand, vCurrent, aOperator);
+            String vExpression = trimZeros(aOperand) + " " + SIGNS.getOrDefault(aOperator, aOperator) + " "
+                    + trimZeros(vCurrent);
             aDisplay = trimZeros(vResult);
+            record(vExpression, aDisplay);
             aOperator = "";
             aStartNewNumber = true;
             aOperand = vResult;
         } catch (RuntimeException vException) {
             showError();
+        }
+    }
+
+    /**
+     * Écriture d'une fonction appliquée à un nombre : 3², √9, 5!, sin(30).
+     */
+    static String unaryExpression(String pName, String pValue) {
+        String rText;
+        switch (pName) {
+            case "x²":
+                rText = pValue + "²";
+                break;
+            case "√":
+                rText = "√" + pValue;
+                break;
+            case "n!":
+                rText = pValue + "!";
+                break;
+            default:
+                rText = pName + "(" + pValue + ")";
+                break;
+        }
+        return rText;
+    }
+
+    private void record(String pExpression, String pResult) {
+        aLastCalculation = new Calcul(pExpression, pResult);
+        aHistory.addFirst(aLastCalculation);
+        if (aHistory.size() > HISTORIQUE_MAX) {
+            aHistory.removeLast();
+        }
+    }
+
+    /**
+     * Calculs terminés, du plus récent au plus ancien.
+     */
+    public List<Calcul> getHistorique() {
+        List<Calcul> rHistory = List.copyOf(new ArrayList<>(aHistory));
+        return rHistory;
+    }
+
+    /**
+     * Calcul terminé par la dernière touche, ou null si elle n'a rien calculé.
+     */
+    public Calcul getDernierCalcul() {
+        Calcul rLast = aLastCalculation;
+        return rLast;
+    }
+
+    public void effacerHistorique() {
+        aHistory.clear();
+    }
+
+    /**
+     * Remet un résultat de l'historique à l'écran pour continuer le calcul avec ; ignore un texte qui
+     * n'est pas un nombre.
+     */
+    public void reprendre(String pValue) {
+        try {
+            aDisplay = trimZeros(Double.parseDouble(pValue));
+            aStartNewNumber = true;
+        } catch (RuntimeException vException) {
+            // Un texte qui n'est pas un nombre ne change rien
+            return;
         }
     }
 

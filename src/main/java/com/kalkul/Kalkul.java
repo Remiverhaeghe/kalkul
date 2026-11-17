@@ -46,6 +46,7 @@ public class Kalkul extends JFrame {
 
     private final transient MoteurCalcul aEngine = new MoteurCalcul();
     private final Ecran aDisplay = new Ecran();
+    private final PanneauHistorique aHistory = new PanneauHistorique(this::reuse, aEngine::effacerHistorique);
 
     public Kalkul() {
         super("Kalkul");
@@ -65,6 +66,7 @@ public class Kalkul extends JFrame {
         vTabs.addTab("Financier", new PanneauFinance());
         vTabs.addTab("Graphique", new PanneauGraphique());
         vTabs.addTab("Outils", new PanneauOutils());
+        vTabs.addTab("Historique", aHistory);
         // Les touches du clavier ne doivent pas être volées par la navigation entre onglets
         vTabs.setFocusable(false);
         vTabs.setBorder(BorderFactory.createEmptyBorder(0, 6, 6, 6));
@@ -101,6 +103,18 @@ public class Kalkul extends JFrame {
     private void send(String pInput) {
         aEngine.handleInput(pInput);
         aDisplay.afficher(aEngine.getDisplay(), aEngine.isDegrees());
+        MoteurCalcul.Calcul vLast = aEngine.getDernierCalcul();
+        // Le rappel du calcul reste affiché jusqu'à la touche suivante
+        aDisplay.rappel(vLast == null ? "" : vLast.expression() + " =");
+        if (vLast != null) {
+            aHistory.montrer(aEngine.getHistorique());
+        }
+    }
+
+    private void reuse(String pValue) {
+        aEngine.reprendre(pValue);
+        aDisplay.afficher(aEngine.getDisplay(), aEngine.isDegrees());
+        aDisplay.rappel("");
     }
 
     private void addKeyBindings() {
