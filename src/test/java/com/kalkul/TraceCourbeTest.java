@@ -44,6 +44,20 @@ class TraceCourbeTest {
     }
 
     @Test
+    void scatterPointsAreDrawnOverTheLine() {
+        double[] vX = {1, 2, 3, 4, 5};
+        double[] vY = {2, 4, 5, 4, 5};
+        TraceCourbe vPlot = new TraceCourbe();
+        vPlot.setCurve(EchantillonCourbe.scatter(vX, vY, x -> 0.6 * x + 2.2, 50));
+        int vLineOnly = coloredPixels(vPlot);
+        vPlot.setPoints(vX, vY);
+        assertTrue(coloredPixels(vPlot) > vLineOnly);
+        // Une nouvelle courbe efface le nuage précédent
+        vPlot.setCurve(EchantillonCourbe.scatter(vX, vY, x -> 0.6 * x + 2.2, 50));
+        assertTrue(coloredPixels(vPlot) == vLineOnly);
+    }
+
+    @Test
     void plotWithGapsFromAnAsymptoteIsDrawnWithoutFailing() {
         TraceCourbe vPlot = new TraceCourbe();
         vPlot.setCurve(EchantillonCourbe.sample(x -> 1 / x, -5, 5, 301));

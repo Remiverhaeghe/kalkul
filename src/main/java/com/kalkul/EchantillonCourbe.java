@@ -53,6 +53,33 @@ final class EchantillonCourbe {
         return rSample;
     }
 
+    /**
+     * Droite d'ajustement tracée un peu au-delà des points, avec une plage verticale qui montre tous les points.
+     */
+    static EchantillonCourbe scatter(double[] pX, double[] pY, DoubleUnaryOperator pLine, int pPoints) {
+        double vXMin = Double.POSITIVE_INFINITY;
+        double vXMax = Double.NEGATIVE_INFINITY;
+        for (double vX : pX) {
+            vXMin = Math.min(vXMin, vX);
+            vXMax = Math.max(vXMax, vX);
+        }
+        if (!(vXMin < vXMax)) {
+            throw new IllegalArgumentException("Il faut au moins deux x différents");
+        }
+        double vXSpace = (vXMax - vXMin) * MARGIN;
+        EchantillonCourbe vLine = sample(pLine, vXMin - vXSpace, vXMax + vXSpace, pPoints);
+        // La plage de la droite seule laisserait hors du cadre les points loin de la droite
+        double vMin = vLine.aYMin;
+        double vMax = vLine.aYMax;
+        for (double vY : pY) {
+            vMin = Math.min(vMin, vY);
+            vMax = Math.max(vMax, vY);
+        }
+        double vYSpace = (vMax - vMin) * MARGIN;
+        EchantillonCourbe rSample = new EchantillonCourbe(vLine.aX, vLine.aY, vMin - vYSpace, vMax + vYSpace);
+        return rSample;
+    }
+
     static boolean isUsable(double pY) {
         boolean rUsable = !Double.isNaN(pY) && !Double.isInfinite(pY) && Math.abs(pY) <= Y_LIMIT;
         return rUsable;

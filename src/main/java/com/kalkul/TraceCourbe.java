@@ -12,7 +12,8 @@ import java.awt.geom.Rectangle2D;
 import javax.swing.JPanel;
 
 /**
- * Zone de dessin d'une courbe : repère gradué, courbe, tangente en un point et aire sous la courbe.
+ * Zone de dessin d'une courbe : repère gradué, courbe, tangente en un point, aire sous la courbe
+ * et nuage de points.
  * Le dessin utilise seulement Java2D.
  */
 class TraceCourbe extends JPanel {
@@ -25,6 +26,8 @@ class TraceCourbe extends JPanel {
     private static final Color CURVE = new Color(25, 100, 200);
     private static final Color TANGENT = new Color(210, 70, 40);
     private static final Color AREA = new Color(25, 100, 200, 60);
+    private static final Color POINT = new Color(30, 30, 30);
+    private static final double POINT_SIZE = 7;
 
     private transient EchantillonCourbe aSample;
     private transient Double aTangentX;
@@ -32,6 +35,8 @@ class TraceCourbe extends JPanel {
     private transient double aTangentSlope;
     private transient Double aAreaFrom;
     private transient double aAreaTo;
+    private transient double[] aPointsX;
+    private transient double[] aPointsY;
 
     TraceCourbe() {
         setBackground(Color.WHITE);
@@ -41,6 +46,14 @@ class TraceCourbe extends JPanel {
         aSample = pSample;
         aTangentX = null;
         aAreaFrom = null;
+        aPointsX = null;
+        aPointsY = null;
+        repaint();
+    }
+
+    void setPoints(double[] pX, double[] pY) {
+        aPointsX = pX.clone();
+        aPointsY = pY.clone();
         repaint();
     }
 
@@ -76,6 +89,7 @@ class TraceCourbe extends JPanel {
         drawArea(vG, vPlot);
         drawCurve(vG, vPlot);
         drawTangent(vG, vPlot);
+        drawPoints(vG, vPlot);
         vG.dispose();
     }
 
@@ -174,6 +188,19 @@ class TraceCourbe extends JPanel {
             vPath.closePath();
             pG.setColor(AREA);
             pG.fill(vPath);
+        }
+    }
+
+    private void drawPoints(Graphics2D pG, Rectangle2D pPlot) {
+        if (aPointsX == null) {
+            return;
+        }
+        pG.setColor(POINT);
+        for (int vIndex = 0; vIndex < aPointsX.length; vIndex++) {
+            double vPx = toPixelX(pPlot, aPointsX[vIndex]);
+            double vPy = toPixelY(pPlot, aPointsY[vIndex]);
+            pG.fill(new java.awt.geom.Ellipse2D.Double(vPx - POINT_SIZE / 2, vPy - POINT_SIZE / 2,
+                    POINT_SIZE, POINT_SIZE));
         }
     }
 

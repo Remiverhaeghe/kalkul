@@ -11,16 +11,18 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 /**
- * Sous-onglet Régression : une droite ajustée sur des couples x y, avec corrélation et significativité.
- * Le calcul est fait par {@link Regression}.
+ * Sous-onglet Régression : une droite ajustée sur des couples x y, avec corrélation et significativité,
+ * et le nuage de points sous la droite. Le calcul est fait par {@link Regression}.
  */
 class PanneauRegression extends JPanel {
     private static final long serialVersionUID = 1L;
     private static final double SIGNIFICANCE_LEVEL = 0.05;
+    private static final int LINE_POINTS = 50;
 
     private final JTextArea aPairs = new JTextArea("1 2\n2 4\n3 5\n4 4\n5 5", 8, 14);
     private final JTextField aPrediction = new JTextField(6);
     private final JTextArea aResult = new JTextArea(7, 30);
+    private final TraceCourbe aPlot = new TraceCourbe();
 
     PanneauRegression() {
         setLayout(new BorderLayout(4, 4));
@@ -35,7 +37,8 @@ class PanneauRegression extends JPanel {
         vCompute.addActionListener(pEvent -> compute());
         JPanel vActions = PanneauOutils.row(new JLabel("prévoir y pour x ="), aPrediction, vCompute);
         vInput.add(vActions, BorderLayout.SOUTH);
-        add(vInput, BorderLayout.CENTER);
+        add(vInput, BorderLayout.WEST);
+        add(aPlot, BorderLayout.CENTER);
 
         aResult.setEditable(false);
         aResult.setFont(new Font(Font.MONOSPACED, Font.PLAIN, 13));
@@ -47,6 +50,8 @@ class PanneauRegression extends JPanel {
         try {
             double[][] vPairs = Regression.parsePairs(aPairs.getText());
             Regression vFit = Regression.fit(vPairs[0], vPairs[1]);
+            aPlot.setCurve(EchantillonCourbe.scatter(vPairs[0], vPairs[1], vFit::predict, LINE_POINTS));
+            aPlot.setPoints(vPairs[0], vPairs[1]);
             StringBuilder vText = new StringBuilder();
             vText.append("y = ").append(Affichage.format(vFit.slope())).append(" x + ")
                     .append(Affichage.format(vFit.intercept())).append('\n');
