@@ -2,6 +2,13 @@
 
 Calculatrice de bureau en Java Swing, avec un onglet par famille de calculs. Le clavier fonctionne comme les boutons.
 
+<p>
+  <img src="docs/calculatrice.png" alt="Onglet Base : écran à chiffres cyan, touches graphite, opérateurs ambre" width="360">
+  <img src="docs/scientifique.png" alt="Onglet Scientifique avec le choix degrés ou radians" width="360">
+</p>
+
+L'habillage est fait en Swing seul, sans bibliothèque de thème : thème Metal recoloré en graphite (`Habillage`), touches dessinées et colorées selon leur rôle (`Touche`), écran façon afficheur fluorescent qui rétrécit les nombres trop longs (`Ecran`).
+
 | Onglet | Contenu |
 |---|---|
 | Base | Quatre opérations, reste (`mod`), pourcentage, carré, racine carrée, changement de signe, retour arrière |

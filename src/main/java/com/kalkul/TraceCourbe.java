@@ -21,12 +21,12 @@ class TraceCourbe extends JPanel {
     private static final int MARGIN_LEFT = 46;
     private static final int MARGIN_OTHER = 14;
     private static final int MARGIN_BOTTOM = 24;
-    private static final Color GRID = new Color(225, 225, 225);
-    private static final Color AXIS = new Color(90, 90, 90);
-    private static final Color CURVE = new Color(25, 100, 200);
-    private static final Color TANGENT = new Color(210, 70, 40);
-    private static final Color AREA = new Color(25, 100, 200, 60);
-    private static final Color POINT = new Color(30, 30, 30);
+    private static final Color GRID = new Color(0x1F282C);
+    private static final Color AXIS = Habillage.TEXTE_DOUX;
+    private static final Color CURVE = Habillage.CHIFFRES;
+    private static final Color TANGENT = Habillage.AMBRE;
+    private static final Color AREA = new Color(0x5C, 0xE1, 0xE6, 50);
+    private static final Color POINT = Habillage.TEXTE;
     private static final double POINT_SIZE = 7;
 
     private transient EchantillonCourbe aSample;
@@ -39,7 +39,7 @@ class TraceCourbe extends JPanel {
     private transient double[] aPointsY;
 
     TraceCourbe() {
-        setBackground(Color.WHITE);
+        setBackground(Habillage.ECRAN);
     }
 
     void setCurve(EchantillonCourbe pSample) {
