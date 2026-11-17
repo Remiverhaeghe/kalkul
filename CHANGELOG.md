@@ -3,6 +3,7 @@
 ## Non publié
 
 ### Fonctionnalités
+- Thème clair qui suit le réglage des applications de Windows, ou imposé par `-Dkalkul.theme=clair|sombre`
 - Nouvel habillage : fond graphite, écran à chiffres cyan avec le mode d'angle, touches arrondies colorées par rôle (chiffres, opérateurs ambre, « = » plein, effacement rouge brique), signes ÷ × −, graphique sur fond sombre
 - Paquets avec Java embarqué par jpackage : dossier Windows zippé et `.deb` Linux, produits par le workflow « Paquets »
 - Onglets Base, Scientifique, Financier, Graphique et Outils

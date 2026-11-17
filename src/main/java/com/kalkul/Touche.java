@@ -52,10 +52,18 @@ class Touche extends JButton {
         return rFond;
     }
 
-    private static Color eclaircir(Color pColor) {
-        Color rColor = new Color(Math.min(255, pColor.getRed() + 22), Math.min(255, pColor.getGreen() + 22),
-                Math.min(255, pColor.getBlue() + 22));
+    /**
+     * Teinte de survol : plus claire en thème sombre, plus foncée en thème clair où le blanc ne s'éclaircit plus.
+     */
+    static Color eclaircir(Color pColor) {
+        int vPas = Habillage.CLAIR ? -18 : 22;
+        Color rColor = new Color(borne(pColor.getRed() + vPas), borne(pColor.getGreen() + vPas),
+                borne(pColor.getBlue() + vPas));
         return rColor;
+    }
+
+    private static int borne(int pValeur) {
+        return Math.max(0, Math.min(255, pValeur));
     }
 
     @Override

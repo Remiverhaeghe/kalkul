@@ -21,11 +21,11 @@ class TraceCourbe extends JPanel {
     private static final int MARGIN_LEFT = 46;
     private static final int MARGIN_OTHER = 14;
     private static final int MARGIN_BOTTOM = 24;
-    private static final Color GRID = new Color(0x1F282C);
+    private static final Color GRID = Habillage.GRILLE;
     private static final Color AXIS = Habillage.TEXTE_DOUX;
     private static final Color CURVE = Habillage.CHIFFRES;
     private static final Color TANGENT = Habillage.AMBRE;
-    private static final Color AREA = new Color(0x5C, 0xE1, 0xE6, 50);
+    private static final Color AREA = new Color(CURVE.getRed(), CURVE.getGreen(), CURVE.getBlue(), 50);
     private static final Color POINT = Habillage.TEXTE;
     private static final double POINT_SIZE = 7;
 

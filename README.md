@@ -9,6 +9,10 @@ Calculatrice de bureau en Java Swing, avec un onglet par famille de calculs. Le 
 
 L'habillage est fait en Swing seul, sans bibliothèque de thème : thème Metal recoloré en graphite (`Habillage`), touches dessinées et colorées selon leur rôle (`Touche`), écran façon afficheur fluorescent qui rétrécit les nombres trop longs (`Ecran`).
 
+Le thème suit Windows : si les applications sont en mode clair, Kalkul passe en clair (fond gris perle, afficheur façon cristaux liquides). On peut l'imposer au lancement avec `-Dkalkul.theme=clair` ou `-Dkalkul.theme=sombre`.
+
+<img src="docs/theme-clair.png" alt="Onglet Base en thème clair : afficheur vert pâle, chiffres blancs, opérateurs ambre" width="300">
+
 | Onglet | Contenu |
 |---|---|
 | Base | Quatre opérations, reste (`mod`), pourcentage, carré, racine carrée, changement de signe, retour arrière |
