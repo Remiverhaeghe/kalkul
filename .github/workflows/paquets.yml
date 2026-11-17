@@ -1,0 +1,68 @@
+# Paquets installables de Kalkul, avec Java embarqué : l'utilisateur n'a pas besoin d'installer Java.
+name: Paquets
+
+on:
+  workflow_dispatch:
+  push:
+    tags: ["v*"]
+
+permissions:
+  contents: read
+
+jobs:
+  paquet:
+    name: Paquet ${{ matrix.nom }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - nom: Windows
+            os: windows-latest
+            type: app-image
+          - nom: Linux
+            os: ubuntu-latest
+            type: deb
+    runs-on: ${{ matrix.os }}
+
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+
+      - uses: actions/setup-java@v6
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+
+      - name: Jar testé
+        run: mvn -B verify
+
+      - name: Paquet jpackage
+        shell: bash
+        env:
+          TYPE: ${{ matrix.type }}
+          REF_NAME: ${{ github.ref_name }}
+        # jpackage veut une version numérique : celle du tag (v1.2.0 donne 1.2.0), sinon 1.0.0
+        run: |
+          vVersion=1.0.0
+          if [[ "$REF_NAME" =~ ^v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then vVersion=${BASH_REMATCH[1]}; fi
+          mkdir -p paquet/entree
+          cp target/kalkul-*.jar paquet/entree/kalkul.jar
+          jpackage --type "$TYPE" --name Kalkul --app-version "$vVersion" \
+            --vendor "Rémi Verhaeghe" --description "Calculatrice de bureau" \
+            --input paquet/entree --main-jar kalkul.jar --main-class com.kalkul.Kalkul \
+            --dest paquet/sortie
+
+      - name: Archive Windows
+        if: matrix.type == 'app-image'
+        shell: pwsh
+        run: Compress-Archive -Path paquet/sortie/Kalkul -DestinationPath paquet/sortie/Kalkul-windows.zip
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: kalkul-${{ matrix.nom }}
+          path: |
+            paquet/sortie/*.zip
+            paquet/sortie/*.deb
+          if-no-files-found: error

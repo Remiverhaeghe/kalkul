@@ -29,6 +29,12 @@ mvn package
 java -jar target/kalkul-1.0-SNAPSHOT.jar
 ```
 
+Sans installer Java : le workflow « Paquets » (lancé à la main ou à chaque tag `v*`) produit un dossier Windows zippé avec Java embarqué (`Kalkul.exe` dedans) et un paquet `.deb` pour Linux, téléchargeables dans les artefacts du passage. Le même résultat en local, après `mvn package` :
+
+```bash
+jpackage --type app-image --name Kalkul --input target --main-jar kalkul-1.0-SNAPSHOT.jar --main-class com.kalkul.Kalkul
+```
+
 ## Tests
 
 ```bash
