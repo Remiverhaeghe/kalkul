@@ -2,7 +2,6 @@ package com.kalkul;
 
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import org.junit.jupiter.api.Test;
@@ -17,7 +16,7 @@ class TraceCourbeTest {
         int rCount = 0;
         for (int vX = 0; vX < 500; vX++) {
             for (int vY = 0; vY < 350; vY++) {
-                if (vImage.getRGB(vX, vY) != Color.WHITE.getRGB()) {
+                if (vImage.getRGB(vX, vY) != pPlot.getBackground().getRGB()) {
                     rCount++;
                 }
             }

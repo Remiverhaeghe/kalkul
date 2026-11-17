@@ -1,7 +1,6 @@
 package com.kalkul;
 
 import java.awt.BorderLayout;
-import java.awt.Font;
 import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
@@ -12,10 +11,8 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JRootPane;
 import javax.swing.JTabbedPane;
-import javax.swing.JTextField;
 import javax.swing.JToggleButton;
 import javax.swing.KeyStroke;
-import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 /**
@@ -48,23 +45,18 @@ public class Kalkul extends JFrame {
     private static final String KEYS = "0123456789.+-*/=^\n\r\b";
 
     private final transient MoteurCalcul aEngine = new MoteurCalcul();
-    private final JTextField aDisplay;
+    private final Ecran aDisplay = new Ecran();
 
     public Kalkul() {
         super("Kalkul");
 
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setSize(640, 760);
+        setSize(640, 780);
         setLocationRelativeTo(null);
-        setLayout(new BorderLayout(5, 5));
+        getContentPane().setBackground(Habillage.FOND);
+        setLayout(new BorderLayout(0, 4));
 
-        aDisplay = new JTextField(aEngine.getDisplay());
-        aDisplay.setHorizontalAlignment(SwingConstants.RIGHT);
-        aDisplay.setEditable(false);
-        // Sans cela, l'écran garde le focus et avale les touches du clavier
-        aDisplay.setFocusable(false);
-        aDisplay.setFont(new Font("SansSerif", Font.BOLD, 28));
-        aDisplay.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+        aDisplay.afficher(aEngine.getDisplay(), aEngine.isDegrees());
         add(aDisplay, BorderLayout.NORTH);
 
         JTabbedPane vTabs = new JTabbedPane();
@@ -75,6 +67,7 @@ public class Kalkul extends JFrame {
         vTabs.addTab("Outils", new PanneauOutils());
         // Les touches du clavier ne doivent pas être volées par la navigation entre onglets
         vTabs.setFocusable(false);
+        vTabs.setBorder(BorderFactory.createEmptyBorder(0, 6, 6, 6));
         add(vTabs, BorderLayout.CENTER);
 
         addKeyBindings();
@@ -84,12 +77,22 @@ public class Kalkul extends JFrame {
     private JPanel buildScientificTab() {
         JToggleButton vAngle = new JToggleButton("Angles en degrés", true);
         vAngle.setFocusable(false);
+        vAngle.setContentAreaFilled(false);
+        vAngle.setOpaque(true);
+        vAngle.setBackground(Habillage.ECRAN);
+        vAngle.setForeground(Habillage.CHIFFRES);
+        vAngle.setFont(Habillage.texte(java.awt.Font.BOLD, 13));
+        vAngle.setBorder(BorderFactory.createCompoundBorder(
+                BorderFactory.createLineBorder(Habillage.BORDURE), BorderFactory.createEmptyBorder(7, 10, 7, 10)));
         vAngle.addActionListener(pEvent -> {
             aEngine.setDegrees(vAngle.isSelected());
             vAngle.setText(vAngle.isSelected() ? "Angles en degrés" : "Angles en radians");
+            aDisplay.afficher(aEngine.getDisplay(), aEngine.isDegrees());
         });
 
-        JPanel rPanel = new JPanel(new BorderLayout(5, 5));
+        JPanel rPanel = new JPanel(new BorderLayout(0, 0));
+        rPanel.setBackground(Habillage.FOND);
+        rPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 0, 10));
         rPanel.add(vAngle, BorderLayout.NORTH);
         rPanel.add(new PanneauTouches(SCIENTIFIC_KEYS, 6, this::send), BorderLayout.CENTER);
         return rPanel;
@@ -97,7 +100,7 @@ public class Kalkul extends JFrame {
 
     private void send(String pInput) {
         aEngine.handleInput(pInput);
-        aDisplay.setText(aEngine.getDisplay());
+        aDisplay.afficher(aEngine.getDisplay(), aEngine.isDegrees());
     }
 
     private void addKeyBindings() {
@@ -121,6 +124,9 @@ public class Kalkul extends JFrame {
     }
 
     public static void main(String[] pArgs) {
-        SwingUtilities.invokeLater(Kalkul::new);
+        SwingUtilities.invokeLater(() -> {
+            Habillage.appliquer();
+            new Kalkul();
+        });
     }
 }
