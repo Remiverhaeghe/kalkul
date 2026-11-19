@@ -49,6 +49,8 @@ public class Kalkul extends JFrame {
     private final Ecran aDisplay = new Ecran();
     private final transient CarnetFormules aFormulas =
             CarnetFormules.depuis(Preferences.userNodeForPackage(Kalkul.class));
+    private final transient FeuilleCalcul aSheet =
+            FeuilleCalcul.depuis(Preferences.userNodeForPackage(Kalkul.class));
     private final PanneauHistorique aHistory = new PanneauHistorique(this::reuse, aEngine::effacerHistorique);
 
     public Kalkul() {
@@ -68,10 +70,11 @@ public class Kalkul extends JFrame {
         vTabs.addTab("Base", new PanneauTouches(BASE_KEYS, 4, this::send));
         vTabs.addTab("Scientifique", buildScientificTab());
         vTabs.addTab("Financier", new PanneauFinance());
-        vTabs.addTab("Graphique", new PanneauGraphique(aFormulas));
+        vTabs.addTab("Graphique", new PanneauGraphique(aFormulas, aSheet));
         vTabs.addTab("Programmeur", new PanneauProgrammeur());
         vTabs.addTab("Chantier", new PanneauChantier());
         vTabs.addTab("Outils", new PanneauOutils());
+        vTabs.addTab("Feuille", new PanneauFeuille(aSheet, aFormulas));
         vTabs.addTab("Historique", aHistory);
         // Les touches du clavier ne doivent pas être volées par la navigation entre onglets
         vTabs.setFocusable(false);
@@ -138,8 +141,9 @@ public class Kalkul extends JFrame {
         }
         String vX = aEngine.getDisplay();
         try {
-            double vResult = CarnetFormules.appliquer(pFormula, Double.parseDouble(vX));
-            aEngine.afficherResultat(CarnetFormules.ecrire(pFormula, Double.parseDouble(vX)), vResult);
+            java.util.Map<String, Double> vCells = aSheet.valeurs();
+            double vResult = CarnetFormules.appliquer(pFormula, Double.parseDouble(vX), vCells);
+            aEngine.afficherResultat(CarnetFormules.ecrire(pFormula, Double.parseDouble(vX), vCells), vResult);
             aDisplay.rappel(aEngine.getHistorique().get(0).expression() + " =");
             aHistory.montrer(aEngine.getHistorique());
         } catch (RuntimeException vException) {

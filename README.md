@@ -33,15 +33,21 @@ Une formule de l'onglet Graphique s'enregistre avec ses paramètres (20 au plus,
 
 <img src="docs/formule-ecran.png" alt="Onglet Scientifique : la formule a*x + b appliquée à 3 donne 7" width="460">
 
+L'onglet Feuille garde jusqu'à 12 cellules nommées (`surface = 4.2*3.5`, `prix = surface*24.9`), d'une session à l'autre. Une cellule peut reprendre les autres ; une référence circulaire ou une valeur manquante est refusée. Les noms ne prennent que des lettres sans accent, et pas `x`, `pi`, `e` ni un nom de fonction. Les cellules servent de variables aux formules enregistrées, dans l'onglet Feuille, dans « f(écran) » et dans les courbes ; un paramètre de la formule passe avant une cellule du même nom.
+
+L'onglet Outils réunit aussi la règle de trois et les pourcentages : pourcentage d'une valeur, part en %, variation, prix après une ou deux remises successives (20 % puis 10 % font 28 %), prix avant remise et prix au mètre carré.
+
 | Onglet | Contenu |
 |---|---|
 | Base | Quatre opérations, reste (`mod`), pourcentage, carré, racine carrée, changement de signe, retour arrière |
 | Scientifique | sin, cos, tan et leurs réciproques en degrés ou en radians, exp, ln, log, puissance, factorielle |
 | Financier | Intérêts simples et composés, mensualité et tableau d'amortissement d'un prêt, VAN, TRI, trésorerie cumulée, conversion monétaire avec un taux saisi |
 | Graphique | Courbes à partir d'une formule avec variables (`a*sin(x) + b`), tangente et dérivée en un point, intégrale et aire ; matrices (somme, produit, transposée, déterminant, inverse), systèmes d'équations, produits scalaire et vectoriel ; régression linéaire avec corrélation, seuil de significativité et nuage de points |
-| Outils | Moyenne, variance et écart-type ; équation du second degré ; conversion de longueurs, masses, volumes et températures |
+| Chantier | Revêtement, dalle et pente ; angles de coupe ; toiture ; terrassement et gâchées |
+| Outils | Moyenne, variance et écart-type ; équation du second degré ; conversion de longueurs, masses, volumes et températures ; règle de trois, pourcentages et remises |
+| Feuille | Cellules nommées, réutilisées par les formules enregistrées |
 
-Prévu ensuite : enregistrement des formules, taux de change en ligne.
+Prévu ensuite : taux de change en ligne.
 
 Stack : Java 17, Maven, JUnit 5.
 
@@ -89,7 +95,9 @@ mvn verify
 | `PanneauGraphique.java`, `PanneauCourbe.java`, `PanneauMatrices.java`, `PanneauRegression.java` | Écrans de l'onglet Graphique |
 | `Kalkul.java` | Fenêtre, onglets et clavier ; transmet chaque touche au moteur |
 | `PanneauTouches.java` | Grille de boutons réutilisée par les onglets Base et Scientifique |
-| `PanneauOutils.java` | Formulaires de l'onglet Outils |
+| `PanneauOutils.java`, `PanneauProportions.java` | Formulaires de l'onglet Outils |
+| `Proportions.java` | Règle de trois, pourcentages, remises, prix au m² |
+| `FeuilleCalcul.java`, `PanneauFeuille.java` | Cellules nommées et onglet Feuille |
 | `Chantier.java`, `Coupes.java`, `Toiture.java`, `Terrassement.java`, `Melanges.java` | Calculs de l'onglet Chantier : revêtement, dalle, pente, angles de coupe, toiture, terrassement, gâchées |
 | `PanneauChantier.java`, `PanneauCoupes.java`, `PanneauToiture.java`, `PanneauTerrassement.java` | Écrans de l'onglet Chantier |
 | `src/test/java/...` | Tests du moteur, des fonctions et des conversions |

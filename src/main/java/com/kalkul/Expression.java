@@ -79,6 +79,15 @@ public final class Expression {
     }
 
     /**
+     * Vrai si le nom est déjà pris par une fonction ou une constante et ne peut pas servir de variable.
+     */
+    static boolean nomReserve(String pNom) {
+        String vNom = pNom.toLowerCase(Locale.ROOT);
+        boolean rReserve = FUNCTIONS.contains(vNom) || "pi".equals(vNom) || "e".equals(vNom);
+        return rReserve;
+    }
+
+    /**
      * Lit des paramètres du type {@code a=2 b=1,5 c=-3} (séparés par des espaces ou des points-virgules).
      */
     public static Map<String, Double> parseParameters(String pText) {
