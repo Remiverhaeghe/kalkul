@@ -42,6 +42,7 @@ public final class Conversions {
         // Pente : % et mm/m sont proportionnels, l'angle passe par la tangente
         add("% de pente", PENTE, 1);
         add("mm/m", PENTE, 0.1);
+        add("cm/m", PENTE, 1);
         add("° de pente", PENTE, 1);
     }
 
