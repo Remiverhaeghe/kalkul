@@ -3,6 +3,8 @@
 ## Non publié
 
 ### Fonctionnalités
+- Onglet Feuille : jusqu'à 12 cellules nommées qui se reprennent entre elles, gardées d'une session à l'autre, utilisables comme variables dans les formules enregistrées (onglet Feuille, « f(écran) », courbes)
+- Règle de trois et pourcentages dans l'onglet Outils : pourcentage, part, variation, remises successives, prix avant remise, prix au m²
 - Onglet Chantier en sous-onglets : Surfaces et dalle, Coupes, Toiture, Terrassement et mélanges
 - Angles de coupe : onglet de plinthe selon l'angle du mur, coupe composée d'une pièce inclinée (table et lame), chevron contre un arêtier
 - Toiture : pente en %, degrés et cm par mètre, rampant, pente minimale indicative par couverture ; unité cm/m dans les conversions

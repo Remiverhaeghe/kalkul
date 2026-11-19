@@ -28,8 +28,10 @@ class PanneauCourbe extends JPanel {
     private final JTextField aTo = new JTextField(4);
     private final JLabel aResult = new JLabel(" ");
     private final TraceCourbe aPlot = new TraceCourbe();
+    private final transient FeuilleCalcul aFeuille;
 
-    PanneauCourbe(CarnetFormules pCarnet) {
+    PanneauCourbe(CarnetFormules pCarnet, FeuilleCalcul pFeuille) {
+        aFeuille = pFeuille;
         setLayout(new BorderLayout(4, 4));
 
         JPanel vForm = new JPanel(new GridLayout(0, 1, 2, 2));
@@ -71,7 +73,9 @@ class PanneauCourbe extends JPanel {
     private void draw() {
         try {
             Expression vFormula = Expression.parse(aFormula.getText());
-            Map<String, Double> vParameters = Expression.parseParameters(aParameters.getText());
+            // Les cellules de la feuille servent de variables, les paramètres saisis passent avant
+            Map<String, Double> vParameters = new java.util.HashMap<>(aFeuille.valeurs());
+            vParameters.putAll(Expression.parseParameters(aParameters.getText()));
             DoubleUnaryOperator vFunction = vFormula.bind(vParameters);
             aPlot.setCurve(EchantillonCourbe.sample(vFunction, number(aXMin), number(aXMax), POINTS));
 

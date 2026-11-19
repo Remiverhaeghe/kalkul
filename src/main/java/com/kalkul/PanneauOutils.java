@@ -12,8 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
- * Onglet d'outils qui demandent plusieurs saisies : statistiques, équation du second degré
- * et conversion d'unités. Le calcul est fait par {@link FonctionsScientifiques} et {@link Conversions}.
+ * Onglet d'outils qui demandent plusieurs saisies : statistiques, équation du second degré,
+ * conversion d'unités, règle de trois et pourcentages. Le calcul est fait par
+ * {@link FonctionsScientifiques}, {@link Conversions} et {@link Proportions}.
  */
 class PanneauOutils extends JPanel {
     private static final long serialVersionUID = 1L;
@@ -23,6 +24,7 @@ class PanneauOutils extends JPanel {
         add(buildStatistics());
         add(buildQuadratic());
         add(buildConversion());
+        add(PanneauProportions.construire());
     }
 
     private JPanel buildStatistics() {

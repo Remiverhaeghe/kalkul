@@ -71,8 +71,17 @@ final class CarnetFormules {
      * Valeur de la formule pour pX, avec ses paramètres.
      */
     static double appliquer(Formule pFormule, double pX) {
+        double rValeur = appliquer(pFormule, pX, Map.of());
+        return rValeur;
+    }
+
+    /**
+     * Valeur de la formule pour pX, avec les cellules de la feuille de calcul comme variables ;
+     * un paramètre de la formule passe avant une cellule du même nom.
+     */
+    static double appliquer(Formule pFormule, double pX, Map<String, Double> pCellules) {
         double rValeur = Expression.parse(pFormule.formule())
-                .bind(Expression.parseParameters(pFormule.parametres()))
+                .bind(variables(pFormule, pCellules))
                 .applyAsDouble(pX);
         if (Double.isNaN(rValeur) || Double.isInfinite(rValeur)) {
             throw new ArithmeticException("La formule n'a pas de valeur pour x = " + Affichage.format(pX));
@@ -84,7 +93,13 @@ final class CarnetFormules {
      * Formule écrite avec ses nombres à la place de x et des paramètres : « 2*3 + 1 », « (-3)^2 ».
      */
     static String ecrire(Formule pFormule, double pX) {
-        Map<String, Double> vValeurs = new HashMap<>(Expression.parseParameters(pFormule.parametres()));
+        String rTexte = ecrire(pFormule, pX, Map.of());
+        return rTexte;
+    }
+
+    /** Comme {@link #ecrire(Formule, double)}, les cellules de la feuille remplacées aussi. */
+    static String ecrire(Formule pFormule, double pX, Map<String, Double> pCellules) {
+        Map<String, Double> vValeurs = variables(pFormule, pCellules);
         vValeurs.put("x", pX);
         Matcher vMots = Pattern.compile("\\b[A-Za-z_]\\w*\\b").matcher(pFormule.formule());
         StringBuilder rTexte = new StringBuilder();
@@ -98,6 +113,13 @@ final class CarnetFormules {
         }
         vMots.appendTail(rTexte);
         return rTexte.toString();
+    }
+
+    // Cellules d'abord, paramètres ensuite pour qu'ils l'emportent
+    private static Map<String, Double> variables(Formule pFormule, Map<String, Double> pCellules) {
+        Map<String, Double> rVariables = new HashMap<>(pCellules);
+        rVariables.putAll(Expression.parseParameters(pFormule.parametres()));
+        return rVariables;
     }
 
     /** Une formule par ligne, paramètres après une tabulation. */
