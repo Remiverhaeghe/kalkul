@@ -3,6 +3,11 @@
 ## Non publié
 
 ### Fonctionnalités
+- Onglet Chantier en sous-onglets : Surfaces et dalle, Coupes, Toiture, Terrassement et mélanges
+- Angles de coupe : onglet de plinthe selon l'angle du mur, coupe composée d'une pièce inclinée (table et lame), chevron contre un arêtier
+- Toiture : pente en %, degrés et cm par mètre, rampant, pente minimale indicative par couverture ; unité cm/m dans les conversions
+- Terrassement : volume d'une fouille avec foisonnement, remblai de sable, gravier ou tout-venant en tonnes et en big bags (densités indicatives)
+- Gâchée de béton, de mortier ou d'enduit selon le dosage : sacs de ciment, seaux de sable et de gravier, eau, et proportions pour un sac
 - Formules enregistrées dans l'onglet Graphique, gardées d'une session à l'autre et appliquées au nombre de l'écran depuis l'onglet Scientifique
 - Onglet Chantier : paquets de revêtement avec chutes, béton d'une dalle, pente et dénivelé
 - Unités de chantier : surfaces, m³, tonne, brouette, pente en %, mm/m et degrés

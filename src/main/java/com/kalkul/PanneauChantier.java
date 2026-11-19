@@ -1,25 +1,36 @@
 package com.kalkul;
 
+import java.awt.BorderLayout;
 import javax.swing.BoxLayout;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 /**
- * Onglet Chantier : revêtement en paquets, béton d'une dalle et pente.
- * Le calcul est fait par {@link Chantier}.
+ * Onglet Chantier : revêtement en paquets, béton d'une dalle et pente, puis un sous-onglet par
+ * famille de calculs (coupes, toiture, terrassement et mélanges).
+ * Le calcul est fait par {@link Chantier}, {@link Coupes}, {@link Toiture}, {@link Terrassement} et {@link Melanges}.
  */
 class PanneauChantier extends JPanel {
     private static final long serialVersionUID = 1L;
 
     PanneauChantier() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(buildPacks());
-        add(buildConcrete());
-        add(buildSlope());
+        super(new BorderLayout());
+        JPanel vSurfaces = new JPanel();
+        vSurfaces.setLayout(new BoxLayout(vSurfaces, BoxLayout.Y_AXIS));
+        vSurfaces.add(buildPacks());
+        vSurfaces.add(buildConcrete());
+        vSurfaces.add(buildSlope());
+        JTabbedPane vOnglets = new JTabbedPane();
+        vOnglets.addTab("Surfaces et dalle", vSurfaces);
+        vOnglets.addTab("Coupes", new PanneauCoupes());
+        vOnglets.addTab("Toiture", new PanneauToiture());
+        vOnglets.addTab("Terrassement et mélanges", new PanneauTerrassement());
+        add(vOnglets, BorderLayout.CENTER);
     }
 
-    private static double number(JTextField pField) {
+    static double number(JTextField pField) {
         return FonctionsScientifiques.parseNumbers(pField.getText())[0];
     }
 

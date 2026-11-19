@@ -21,7 +21,11 @@ L'onglet Programmeur travaille sur des entiers de 8 à 64 bits : saisie en hexad
 
 <img src="docs/programmeur.png" alt="Onglet Programmeur : FF affiché en hexadécimal, décimal, octal et binaire" width="420">
 
-L'onglet Chantier compte les paquets de revêtement avec la marge de chute, le béton d'une dalle (ciment en sacs, sable, gravillons, eau) et la pente d'une évacuation. Les conversions de l'onglet Outils gagnent les surfaces, les m³, la tonne, la brouette et la pente en %, mm/m ou degrés.
+L'onglet Chantier compte les paquets de revêtement avec la marge de chute, le béton d'une dalle (ciment en sacs, sable, gravillons, eau) et la pente d'une évacuation. Les conversions de l'onglet Outils gagnent les surfaces, les m³, la tonne, la brouette et la pente en %, mm/m, cm/m ou degrés. Trois sous-onglets complètent le premier :
+
+- Coupes : onglet d'une plinthe selon l'angle du mur, coupe composée d'une pièce inclinée (corniche, pièce de trémie) en angle de table et inclinaison de lame, chevron contre un arêtier (aplomb, pied, joue, et réglage de la scie chevron couché sur sa joue).
+- Toiture : pente en %, en degrés et en cm par mètre, depuis l'une des trois ou depuis la montée, longueur du rampant, et comparaison avec une pente minimale indicative par couverture (tuile canal, à emboîtement, plate, ardoise). Ces minimums dépendent du modèle, de la région et du rampant : la notice du fabricant fait foi.
+- Terrassement et mélanges : volume d'une fouille avec le foisonnement et les big bags à évacuer, sable, gravier ou tout-venant d'un remblai en tonnes et en big bags, gâchée de béton, de mortier ou d'enduit selon le dosage (sacs de ciment, seaux de sable et de gravier, eau, et la même chose pour un sac). Densités et proportions sont indicatives.
 
 <img src="docs/chantier.png" alt="Onglet Chantier : paquets de revêtement, béton d'une dalle et dénivelé" width="460">
 
@@ -86,6 +90,8 @@ mvn verify
 | `Kalkul.java` | Fenêtre, onglets et clavier ; transmet chaque touche au moteur |
 | `PanneauTouches.java` | Grille de boutons réutilisée par les onglets Base et Scientifique |
 | `PanneauOutils.java` | Formulaires de l'onglet Outils |
+| `Chantier.java`, `Coupes.java`, `Toiture.java`, `Terrassement.java`, `Melanges.java` | Calculs de l'onglet Chantier : revêtement, dalle, pente, angles de coupe, toiture, terrassement, gâchées |
+| `PanneauChantier.java`, `PanneauCoupes.java`, `PanneauToiture.java`, `PanneauTerrassement.java` | Écrans de l'onglet Chantier |
 | `src/test/java/...` | Tests du moteur, des fonctions et des conversions |
 
 Les opérations s'enchaînent de gauche à droite, sans priorité : `2 + 3 * 4` donne 20. L'écran garde 12 chiffres significatifs, donc `0,1 + 0,2` affiche 0,3. La variance est celle d'une population (division par n). Dans les formules, les angles sont en radians, la puissance se lit de droite à gauche (`2^3^2` donne 512) et le séparateur décimal est le point. La significativité est le test bilatéral de Student sur la pente : sous 0,05, la pente est dite significative.
