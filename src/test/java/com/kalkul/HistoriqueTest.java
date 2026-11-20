@@ -76,4 +76,34 @@ class HistoriqueTest {
     void subtractionShowsTheMinusSign() {
         assertEquals("9 − 4", type("9", "-", "4", "=").getHistorique().get(0).expression());
     }
+
+    @Test
+    void searchFindsCalculationsAndResultsWhateverTheSigns() {
+        List<MoteurCalcul.Calcul> vCalculs = type("1", "2", "*", "3", "=", "9", "-", "4", "=", "9", "√")
+                .getHistorique();
+
+        assertEquals(List.of(new MoteurCalcul.Calcul("12 × 3", "36")), Historique.filtrer(vCalculs, "2*3"));
+        assertEquals(List.of(new MoteurCalcul.Calcul("9 − 4", "5")), Historique.filtrer(vCalculs, "9-4"));
+        assertEquals(1, Historique.filtrer(vCalculs, "36").size());
+        assertEquals(3, Historique.filtrer(vCalculs, "  ").size());
+        assertTrue(Historique.filtrer(vCalculs, "sin").isEmpty());
+    }
+
+    @Test
+    void csvHasAHeaderAndQuotesWhatNeedsIt() {
+        String vCsv = Historique.enCsv(List.of(new MoteurCalcul.Calcul("12 × 3", "36"),
+                new MoteurCalcul.Calcul("a;b", "dit \"x\"")));
+        assertEquals("Calcul;Résultat\r\n12 × 3;36\r\n\"a;b\";\"dit \"\"x\"\"\"\r\n", vCsv);
+        assertEquals("Calcul;Résultat\r\n", Historique.enCsv(List.of()));
+    }
+
+    @Test
+    void historyTabFiltersAndExportsWhatIsShown() {
+        PanneauHistorique vPanneau = new PanneauHistorique(pTexte -> { }, () -> { });
+        vPanneau.montrer(type("1", "2", "*", "3", "=", "9", "√").getHistorique());
+        assertEquals(2, vPanneau.taille());
+        vPanneau.chercher("√");
+        assertEquals(1, vPanneau.taille());
+        assertEquals("Calcul;Résultat\r\n√9;3\r\n", vPanneau.csv());
+    }
 }

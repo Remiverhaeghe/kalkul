@@ -3,6 +3,8 @@
 ## Non publié
 
 ### Fonctionnalités
+- Devises dans l'onglet Outils, sans connexion : taux tapés à la main (1 EUR = …) ou importés d'un fichier (eurofxref.csv de la BCE, ou lignes « USD;1,08 »), gardés d'une session à l'autre et toujours affichés avec leur date ; alerte quand ils ont plus d'une semaine
+- Historique : champ de recherche (calcul ou résultat, « * », « / » et « - » trouvent « × », « ÷ » et « − ») et export en CSV de ce qui est affiché, séparé par des points-virgules pour un tableur en français
 - Onglet Outils en sous-onglets (Statistiques, Second degré, Unités, Proportions) ; les sous-onglets d'Outils et de Chantier défilent quand la fenêtre est trop petite, au lieu de couper le bas des formulaires
 - Onglet Feuille : jusqu'à 12 cellules nommées qui se reprennent entre elles, gardées d'une session à l'autre, utilisables comme variables dans les formules enregistrées (onglet Feuille, « f(écran) », courbes)
 - Règle de trois et pourcentages dans l'onglet Outils : pourcentage, part, variation, remises successives, prix avant remise, prix au m²

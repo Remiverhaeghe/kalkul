@@ -3,7 +3,9 @@ package com.kalkul;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
+import java.time.LocalDate;
 import java.util.function.Supplier;
+import java.util.prefs.Preferences;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -14,19 +16,24 @@ import javax.swing.JTextField;
 
 /**
  * Onglet d'outils qui demandent plusieurs saisies, un sous-onglet par outil : statistiques,
- * équation du second degré, conversion d'unités, règle de trois et pourcentages. Le calcul est fait par
+ * équation du second degré, conversion d'unités, règle de trois et pourcentages, devises. Le calcul est fait par
  * {@link FonctionsScientifiques}, {@link Conversions} et {@link Proportions}.
  */
 class PanneauOutils extends JPanel {
     private static final long serialVersionUID = 1L;
 
     PanneauOutils() {
+        this(Devises.depuis(Preferences.userNodeForPackage(Kalkul.class), LocalDate.now()));
+    }
+
+    PanneauOutils(Devises pDevises) {
         super(new BorderLayout());
         JTabbedPane vOnglets = SousOnglets.creer();
         SousOnglets.ajouter(vOnglets, "Statistiques", buildStatistics());
         SousOnglets.ajouter(vOnglets, "Second degré", buildQuadratic());
         SousOnglets.ajouter(vOnglets, "Unités", buildConversion());
         SousOnglets.ajouter(vOnglets, "Proportions", PanneauProportions.construire());
+        SousOnglets.ajouter(vOnglets, "Devises", PanneauDevises.construire(pDevises));
         add(vOnglets, BorderLayout.CENTER);
     }
 
