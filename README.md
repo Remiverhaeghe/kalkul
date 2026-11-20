@@ -13,7 +13,9 @@ Le thème suit Windows : si les applications sont en mode clair, Kalkul passe en
 
 <img src="docs/theme-clair.png" alt="Onglet Base en thème clair : afficheur vert pâle, chiffres blancs, opérateurs ambre" width="300">
 
-L'onglet Historique garde les 50 derniers calculs ; un double-clic remet le résultat à l'écran, et le calcul qui vient d'être fait s'affiche en petit au-dessus du nombre.
+L'onglet Historique garde les 50 derniers calculs ; un double-clic remet le résultat à l'écran, et le calcul qui vient d'être fait s'affiche en petit au-dessus du nombre. Un champ cherche dans la liste, et « Exporter en CSV… » enregistre ce qui est affiché.
+
+Le sous-onglet Devises (Outils) convertit avec des taux gardés sur l'ordinateur : tapés à la main ou importés du fichier `eurofxref.csv` de la Banque centrale européenne, téléchargé soi-même. Kalkul ne se connecte à rien ; la date des taux est affichée, avec une alerte au-delà d'une semaine.
 
 <img src="docs/historique.png" alt="Onglet Historique : liste des calculs et rappel du dernier calcul sur l'écran" width="360">
 
