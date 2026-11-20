@@ -35,7 +35,7 @@ Une formule de l'onglet Graphique s'enregistre avec ses paramètres (20 au plus,
 
 L'onglet Feuille garde jusqu'à 12 cellules nommées (`surface = 4.2*3.5`, `prix = surface*24.9`), d'une session à l'autre. Une cellule peut reprendre les autres ; une référence circulaire ou une valeur manquante est refusée. Les noms ne prennent que des lettres sans accent, et pas `x`, `pi`, `e` ni un nom de fonction. Les cellules servent de variables aux formules enregistrées, dans l'onglet Feuille, dans « f(écran) » et dans les courbes ; un paramètre de la formule passe avant une cellule du même nom.
 
-L'onglet Outils réunit aussi la règle de trois et les pourcentages : pourcentage d'une valeur, part en %, variation, prix après une ou deux remises successives (20 % puis 10 % font 28 %), prix avant remise et prix au mètre carré.
+L'onglet Outils est rangé en quatre sous-onglets : Statistiques, Second degré, Unités et Proportions. Comme ceux de Chantier, ils défilent quand la fenêtre est trop petite. Proportions réunit la règle de trois et les pourcentages : pourcentage d'une valeur, part en %, variation, prix après une ou deux remises successives (20 % puis 10 % font 28 %), prix avant remise et prix au mètre carré.
 
 | Onglet | Contenu |
 |---|---|
@@ -96,6 +96,7 @@ mvn verify
 | `Kalkul.java` | Fenêtre, onglets et clavier ; transmet chaque touche au moteur |
 | `PanneauTouches.java` | Grille de boutons réutilisée par les onglets Base et Scientifique |
 | `PanneauOutils.java`, `PanneauProportions.java` | Formulaires de l'onglet Outils |
+| `SousOnglets.java` | Sous-onglets qui défilent, pour Outils et Chantier |
 | `Proportions.java` | Règle de trois, pourcentages, remises, prix au m² |
 | `FeuilleCalcul.java`, `PanneauFeuille.java` | Cellules nommées et onglet Feuille |
 | `Chantier.java`, `Coupes.java`, `Toiture.java`, `Terrassement.java`, `Melanges.java` | Calculs de l'onglet Chantier : revêtement, dalle, pente, angles de coupe, toiture, terrassement, gâchées |

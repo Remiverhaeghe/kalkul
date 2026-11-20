@@ -22,11 +22,11 @@ class PanneauChantier extends JPanel {
         vSurfaces.add(buildPacks());
         vSurfaces.add(buildConcrete());
         vSurfaces.add(buildSlope());
-        JTabbedPane vOnglets = new JTabbedPane();
-        vOnglets.addTab("Surfaces et dalle", vSurfaces);
-        vOnglets.addTab("Coupes", new PanneauCoupes());
-        vOnglets.addTab("Toiture", new PanneauToiture());
-        vOnglets.addTab("Terrassement et mélanges", new PanneauTerrassement());
+        JTabbedPane vOnglets = SousOnglets.creer();
+        SousOnglets.ajouter(vOnglets, "Surfaces et dalle", vSurfaces);
+        SousOnglets.ajouter(vOnglets, "Coupes", new PanneauCoupes());
+        SousOnglets.ajouter(vOnglets, "Toiture", new PanneauToiture());
+        SousOnglets.ajouter(vOnglets, "Terrassement et mélanges", new PanneauTerrassement());
         add(vOnglets, BorderLayout.CENTER);
     }
 

@@ -1,30 +1,33 @@
 package com.kalkul;
 
+import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.util.function.Supplier;
 import javax.swing.BorderFactory;
-import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
 
 /**
- * Onglet d'outils qui demandent plusieurs saisies : statistiques, équation du second degré,
- * conversion d'unités, règle de trois et pourcentages. Le calcul est fait par
+ * Onglet d'outils qui demandent plusieurs saisies, un sous-onglet par outil : statistiques,
+ * équation du second degré, conversion d'unités, règle de trois et pourcentages. Le calcul est fait par
  * {@link FonctionsScientifiques}, {@link Conversions} et {@link Proportions}.
  */
 class PanneauOutils extends JPanel {
     private static final long serialVersionUID = 1L;
 
     PanneauOutils() {
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        add(buildStatistics());
-        add(buildQuadratic());
-        add(buildConversion());
-        add(PanneauProportions.construire());
+        super(new BorderLayout());
+        JTabbedPane vOnglets = SousOnglets.creer();
+        SousOnglets.ajouter(vOnglets, "Statistiques", buildStatistics());
+        SousOnglets.ajouter(vOnglets, "Second degré", buildQuadratic());
+        SousOnglets.ajouter(vOnglets, "Unités", buildConversion());
+        SousOnglets.ajouter(vOnglets, "Proportions", PanneauProportions.construire());
+        add(vOnglets, BorderLayout.CENTER);
     }
 
     private JPanel buildStatistics() {
