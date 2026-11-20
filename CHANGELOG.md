@@ -3,6 +3,7 @@
 ## Non publié
 
 ### Fonctionnalités
+- Onglet Outils en sous-onglets (Statistiques, Second degré, Unités, Proportions) ; les sous-onglets d'Outils et de Chantier défilent quand la fenêtre est trop petite, au lieu de couper le bas des formulaires
 - Onglet Feuille : jusqu'à 12 cellules nommées qui se reprennent entre elles, gardées d'une session à l'autre, utilisables comme variables dans les formules enregistrées (onglet Feuille, « f(écran) », courbes)
 - Règle de trois et pourcentages dans l'onglet Outils : pourcentage, part, variation, remises successives, prix avant remise, prix au m²
 - Onglet Chantier en sous-onglets : Surfaces et dalle, Coupes, Toiture, Terrassement et mélanges
