@@ -2,6 +2,11 @@
 
 ## Non publié
 
+### Habillage des formulaires et clavier
+- Boutons des formulaires à plat, comme les touches de chiffres ; champs de saisie enfoncés comme l'écran ; sections titrées sur un simple trait, barres de défilement discrètes
+- Une touche tapée au clavier s'allume un instant sur le pavé (Entrée pour « = », retour arrière pour « ⌫ », c pour « C »)
+- Déclic de touche en option (Outils > Réglages, coupé au départ), fabriqué à la volée sans fichier son ; muet sans sortie son
+
 ### Habillage
 - Nouvel habillage inspiré des calculatrices de bureau des années 70 : corps noir mat, touches rondes en relief (dôme éclairé par le haut, cuvette au centre, enfoncées à l'appui), opérateurs olive, « = » moutarde, effacement orange
 - Écran à cristaux liquides gris-vert enfoncé dans un cadre noir, dans les deux thèmes ; la courbe de l'onglet Graphique se trace sur le même fond
