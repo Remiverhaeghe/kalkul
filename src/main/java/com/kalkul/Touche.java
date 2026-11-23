@@ -21,6 +21,12 @@ class Touche extends JButton {
     private static final int MARGE = 6;
 
     private final Habillage.Role aRole;
+    // Allumée un instant quand la touche du clavier correspondante est tapée
+    private boolean aEclairee;
+    private final javax.swing.Timer aExtinction = new javax.swing.Timer(110, pEvent -> {
+        aEclairee = false;
+        repaint();
+    });
 
     Touche(String pLabel) {
         super(Habillage.signe(pLabel));
@@ -41,12 +47,26 @@ class Touche extends JButton {
     }
 
     /**
+     * Montre la touche enfoncée un instant, sans la déclencher : le clavier a déjà envoyé le calcul.
+     */
+    void eclairer() {
+        aEclairee = true;
+        aExtinction.setRepeats(false);
+        aExtinction.restart();
+        repaint();
+    }
+
+    boolean enfoncee() {
+        return getModel().isPressed() || aEclairee;
+    }
+
+    /**
      * Couleur de fond selon l'état : appuyée, survolée ou au repos.
      */
     Color fond() {
         ButtonModel vModel = getModel();
         Color rFond = aRole.aFond;
-        if (vModel.isPressed()) {
+        if (enfoncee()) {
             rFond = rFond.darker();
         } else if (vModel.isRollover()) {
             rFond = eclaircir(rFond);
@@ -70,7 +90,7 @@ class Touche extends JButton {
     protected void paintComponent(Graphics pGraphics) {
         Graphics2D vG = (Graphics2D) pGraphics.create();
         vG.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        boolean vAppuyee = getModel().isPressed();
+        boolean vAppuyee = enfoncee();
         // Touche ronde au centre de sa case, enfoncée de deux points à l'appui
         double vDiametre = Math.max(Math.min(getWidth(), getHeight()) - 2.0 * MARGE, 10);
         double vX = (getWidth() - vDiametre) / 2;

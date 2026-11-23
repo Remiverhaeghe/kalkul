@@ -137,6 +137,7 @@ final class Habillage {
             return;
         }
         UIManager.put("TabbedPaneUI", OngletsInstrument.class.getName());
+        UIManager.put("ButtonUI", BoutonPlat.class.getName());
         UIManager.put("TabbedPane.selected", SURFACE);
         UIManager.put("TabbedPane.contentAreaColor", FOND);
         UIManager.put("TabbedPane.borderHightlightColor", BORDURE);
@@ -152,9 +153,16 @@ final class Habillage {
         UIManager.put("Button.select", BORDURE);
         UIManager.put("ToggleButton.select", Role.OPERATEUR.aFond);
         UIManager.put("TitledBorder.titleColor", TEXTE_DOUX);
-        UIManager.put("TitledBorder.border", BorderFactory.createLineBorder(BORDURE));
-        UIManager.put("TextField.border", BorderFactory.createCompoundBorder(
-                BorderFactory.createLineBorder(BORDURE), BorderFactory.createEmptyBorder(3, 6, 3, 6)));
+        // Sections des formulaires : un simple trait sous le titre, sans cadre fermé
+        UIManager.put("TitledBorder.border", BorderFactory.createMatteBorder(1, 0, 0, 0, BORDURE));
+        UIManager.put("TextField.border", BoutonPlat.champ());
+        UIManager.put("FormattedTextField.border", BoutonPlat.champ());
+        UIManager.put("Button.foreground", TEXTE);
+        UIManager.put("Button.disabledText", TEXTE_DOUX);
+        UIManager.put("ComboBox.background", CHAMP);
+        UIManager.put("ComboBox.foreground", TEXTE);
+        UIManager.put("ComboBox.selectionBackground", OLIVE);
+        UIManager.put("ComboBox.selectionForeground", TEXTE);
         UIManager.put("TextArea.margin", new javax.swing.plaf.InsetsUIResource(6, 8, 6, 8));
         UIManager.put("ScrollPane.border", BorderFactory.createLineBorder(BORDURE));
         UIManager.put("Table.gridColor", BORDURE);

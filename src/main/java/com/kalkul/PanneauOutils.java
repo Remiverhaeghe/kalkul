@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 
 /**
  * Onglet d'outils qui demandent plusieurs saisies, un sous-onglet par outil : statistiques,
- * équation du second degré, conversion d'unités, règle de trois et pourcentages, devises. Le calcul est fait par
+ * équation du second degré, conversion d'unités, règle de trois et pourcentages, devises, réglages. Le calcul est fait par
  * {@link FonctionsScientifiques}, {@link Conversions} et {@link Proportions}.
  */
 class PanneauOutils extends JPanel {
@@ -34,6 +34,7 @@ class PanneauOutils extends JPanel {
         SousOnglets.ajouter(vOnglets, "Unités", buildConversion());
         SousOnglets.ajouter(vOnglets, "Proportions", PanneauProportions.construire());
         SousOnglets.ajouter(vOnglets, "Devises", PanneauDevises.construire(pDevises));
+        SousOnglets.ajouter(vOnglets, "Réglages", Reglages.construire());
         add(vOnglets, BorderLayout.CENTER);
     }
 

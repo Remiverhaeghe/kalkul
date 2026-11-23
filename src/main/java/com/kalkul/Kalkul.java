@@ -154,6 +154,9 @@ public class Kalkul extends JFrame {
     }
 
     private void send(String pInput) {
+        if (Reglages.sonDesTouches()) {
+            Declic.jouer();
+        }
         aEngine.handleInput(pInput);
         aDisplay.afficher(aEngine.getDisplay(), aEngine.isDegrees());
         MoteurCalcul.Calcul vLast = aEngine.getDernierCalcul();
@@ -185,8 +188,37 @@ public class Kalkul extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent pEvent) {
                     send(vText);
+                    eclairer(getContentPane(), toucheDuClavier(vText));
                 }
             });
+        }
+    }
+
+    /**
+     * Texte de la touche à l'écran qui correspond à une touche du clavier : Entrée pour « = »,
+     * retour arrière pour « ⌫ », c pour « C ».
+     */
+    static String toucheDuClavier(String pClavier) {
+        String rTouche = switch (pClavier) {
+            case "\n", "\r" -> "=";
+            case "\b" -> "⌫";
+            case "c" -> "C";
+            default -> pClavier;
+        };
+        return rTouche;
+    }
+
+    /**
+     * Allume la touche visible qui porte ce texte, dans l'onglet ouvert.
+     */
+    private static void eclairer(java.awt.Container pConteneur, String pTouche) {
+        for (java.awt.Component vComposant : pConteneur.getComponents()) {
+            if (vComposant instanceof Touche vTouche && vTouche.isShowing()
+                    && pTouche.equals(vTouche.getActionCommand())) {
+                vTouche.eclairer();
+            } else if (vComposant instanceof java.awt.Container vEnfant) {
+                eclairer(vEnfant, pTouche);
+            }
         }
     }
 
