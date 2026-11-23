@@ -23,10 +23,15 @@ class PanneauOutils extends JPanel {
     private static final long serialVersionUID = 1L;
 
     PanneauOutils() {
-        this(Devises.depuis(Preferences.userNodeForPackage(Kalkul.class), LocalDate.now()));
+        this(Devises.depuis(Preferences.userNodeForPackage(Kalkul.class), LocalDate.now()),
+                Memoires.depuis(Preferences.userNodeForPackage(Kalkul.class)));
     }
 
     PanneauOutils(Devises pDevises) {
+        this(pDevises, new Memoires());
+    }
+
+    PanneauOutils(Devises pDevises, Memoires pMemoires) {
         super(new BorderLayout());
         JTabbedPane vOnglets = SousOnglets.creer();
         SousOnglets.ajouter(vOnglets, "Statistiques", buildStatistics());
@@ -34,6 +39,7 @@ class PanneauOutils extends JPanel {
         SousOnglets.ajouter(vOnglets, "Unités", buildConversion());
         SousOnglets.ajouter(vOnglets, "Proportions", PanneauProportions.construire());
         SousOnglets.ajouter(vOnglets, "Devises", PanneauDevises.construire(pDevises));
+        SousOnglets.ajouter(vOnglets, "Mémoires", PanneauMemoires.construire(pMemoires));
         SousOnglets.ajouter(vOnglets, "Réglages", Reglages.construire());
         add(vOnglets, BorderLayout.CENTER);
     }

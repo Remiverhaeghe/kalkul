@@ -2,6 +2,8 @@
 
 ## Non publié
 
+### Mémoires nommées
+- Mémoires nommées (Outils, sous-onglet Mémoires) : une valeur gardée sous un nom en lettres (« prix »), calculée à partir d'une formule qui peut citer d'autres mémoires (« prix * 3 »), conservée d'une session à l'autre ; les noms de fonctions, de constantes et « x » sont refusés
 ### Habillage des formulaires et clavier
 - Boutons des formulaires à plat, comme les touches de chiffres ; champs de saisie enfoncés comme l'écran ; sections titrées sur un simple trait, barres de défilement discrètes
 - Une touche tapée au clavier s'allume un instant sur le pavé (Entrée pour « = », retour arrière pour « ⌫ », c pour « C »)
