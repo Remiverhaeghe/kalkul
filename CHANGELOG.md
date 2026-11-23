@@ -3,7 +3,7 @@
 ## Non publié
 
 ### Habillage des formulaires et clavier
-- Boutons des formulaires à plat, comme les touches de chiffres ; champs de saisie enfoncés comme l'écran ; sections titrées sur un simple trait
+- Boutons des formulaires à plat, comme les touches de chiffres ; champs de saisie enfoncés comme l'écran ; sections titrées sur un simple trait, barres de défilement discrètes
 - Une touche tapée au clavier s'allume un instant sur le pavé (Entrée pour « = », retour arrière pour « ⌫ », c pour « C »)
 - Déclic de touche en option (Outils > Réglages, coupé au départ), fabriqué à la volée sans fichier son ; muet sans sortie son
 

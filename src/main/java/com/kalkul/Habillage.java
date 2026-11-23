@@ -159,6 +159,16 @@ final class Habillage {
         UIManager.put("FormattedTextField.border", BoutonPlat.champ());
         UIManager.put("Button.foreground", TEXTE);
         UIManager.put("Button.disabledText", TEXTE_DOUX);
+        // Barres de défilement discrètes : poignée couleur bordure sur fond du corps, sans relief
+        for (String vCle : new String[] {"thumb", "thumbHighlight", "thumbShadow", "thumbDarkShadow"}) {
+            UIManager.put("ScrollBar." + vCle, BORDURE);
+        }
+        UIManager.put("ScrollBar.background", FOND);
+        UIManager.put("ScrollBar.track", FOND);
+        UIManager.put("ScrollBar.trackHighlight", FOND);
+        UIManager.put("ScrollBar.shadow", FOND);
+        UIManager.put("ScrollBar.highlight", FOND);
+        UIManager.put("ScrollBar.darkShadow", FOND);
         UIManager.put("ComboBox.background", CHAMP);
         UIManager.put("ComboBox.foreground", TEXTE);
         UIManager.put("ComboBox.selectionBackground", OLIVE);
