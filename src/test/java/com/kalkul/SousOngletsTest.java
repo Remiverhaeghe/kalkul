@@ -30,7 +30,7 @@ class SousOngletsTest {
     @Test
     void toolsAndSiteTabsSplitIntoScrollingSubTabs() {
         assertSubTabs(new PanneauOutils(new Devises()), "Statistiques", "Second degré", "Unités", "Proportions",
-                "Devises");
+                "Devises", "Réglages");
         assertSubTabs(new PanneauChantier(), "Surfaces et dalle", "Coupes", "Toiture",
                 "Terrassement et mélanges");
     }
