@@ -142,5 +142,15 @@ class MoteurCalculTest {
     void roundingErrorsAreHiddenOnTheDisplay() {
         assertEquals("0.3", type("0", ".", "1", "+", "0", ".", "2", "="));
     }
-}
 
+    @Test
+    void axisTicksShowZeroInsteadOfARoundingRest() {
+        double[] vTicks = EchantillonCourbe.graduations(-1.05, 1.05, 0.2);
+
+        assertEquals(11, vTicks.length);
+        assertEquals(0.0, vTicks[5]);
+        assertEquals("0", Affichage.format(vTicks[5]));
+        assertEquals(-1.0, vTicks[0], 1e-12);
+        assertEquals(0, EchantillonCourbe.graduations(2, 1, 0.5).length);
+    }
+}

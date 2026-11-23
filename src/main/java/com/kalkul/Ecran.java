@@ -1,19 +1,19 @@
 package com.kalkul;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
+import java.awt.GradientPaint;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.geom.RoundRectangle2D;
 import javax.swing.JComponent;
 
 /**
- * Écran de la calculatrice : chiffres cyan sur fond sombre, comme un afficheur fluorescent,
- * avec le mode d'angle en petit. Le texte trop long rétrécit au lieu d'être coupé.
+ * Écran de la calculatrice : afficheur à cristaux liquides gris-vert enfoncé dans un cadre noir,
+ * mode d'angle en petit. Le texte trop long rétrécit au lieu d'être coupé.
  */
 class Ecran extends JComponent {
     private static final long serialVersionUID = 1L;
@@ -69,33 +69,33 @@ class Ecran extends JComponent {
         vG.setColor(Habillage.FOND);
         vG.fillRect(0, 0, getWidth(), getHeight());
 
-        RoundRectangle2D vCadre = new RoundRectangle2D.Double(8, 8, getWidth() - 16.0, getHeight() - 16.0, 16, 16);
-        vG.setColor(Habillage.ECRAN);
-        vG.fill(vCadre);
-        vG.setStroke(new BasicStroke(1.5f));
+        // Cadre noir dans lequel l'écran est enfoncé
         vG.setColor(Habillage.CADRE_ECRAN);
-        vG.draw(vCadre);
+        vG.fill(new RoundRectangle2D.Double(8, 8, getWidth() - 16.0, getHeight() - 16.0, 18, 18));
+        RoundRectangle2D vVerre = new RoundRectangle2D.Double(14, 14, getWidth() - 28.0, getHeight() - 28.0, 10, 10);
+        vG.setPaint(new GradientPaint(0, 14, Touche.nuance(Habillage.ECRAN, -10), 0, getHeight() - 14f,
+                Habillage.ECRAN));
+        vG.fill(vVerre);
+        // Ombre du cadre sur le haut du verre
+        vG.setClip(vVerre);
+        vG.setPaint(new GradientPaint(0, 14, new Color(0, 0, 0, 70), 0, 24, new Color(0, 0, 0, 0)));
+        vG.fillRect(14, 14, getWidth() - 28, 10);
+        vG.setClip(null);
 
         vG.setFont(Habillage.texte(Font.BOLD, 11));
         vG.setColor(Habillage.MODE_ECRAN);
-        vG.drawString(aMode, MARGE + 4, 30);
+        vG.drawString(aMode, MARGE + 6, 32);
         if (!aRappel.isEmpty()) {
             vG.setFont(Habillage.chiffres(Font.PLAIN, 14));
-            vG.setColor(Habillage.MODE_ECRAN);
-            vG.drawString(aRappel, getWidth() - MARGE - 4 - vG.getFontMetrics().stringWidth(aRappel), 31);
+            vG.drawString(aRappel, getWidth() - MARGE - 6 - vG.getFontMetrics().stringWidth(aRappel), 33);
         }
 
-        int vLargeur = getWidth() - 2 * MARGE - 8;
+        int vLargeur = getWidth() - 2 * MARGE - 12;
         Font vChiffres = Habillage.chiffres(Font.PLAIN, tailleQuiTient(vG, vLargeur));
         vG.setFont(vChiffres);
         FontMetrics vMetrics = vG.getFontMetrics();
-        int vX = getWidth() - MARGE - 4 - vMetrics.stringWidth(aValeur);
-        int vY = getHeight() - 22;
-        // Halo discret derrière les chiffres, comme la lueur d'un tube fluorescent
-        vG.setColor(new Color(Habillage.CHIFFRES.getRed(), Habillage.CHIFFRES.getGreen(),
-                Habillage.CHIFFRES.getBlue(), 40));
-        vG.drawString(aValeur, vX + 1, vY + 1);
-        vG.drawString(aValeur, vX - 1, vY - 1);
+        int vX = getWidth() - MARGE - 6 - vMetrics.stringWidth(aValeur);
+        int vY = getHeight() - 24;
         vG.setColor(MoteurCalcul.ERREUR.equals(aValeur) ? Habillage.ERREUR_ECRAN : Habillage.CHIFFRES);
         vG.drawString(aValeur, vX, vY);
         vG.dispose();

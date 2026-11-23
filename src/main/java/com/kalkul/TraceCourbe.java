@@ -22,11 +22,11 @@ class TraceCourbe extends JPanel {
     private static final int MARGIN_OTHER = 14;
     private static final int MARGIN_BOTTOM = 24;
     private static final Color GRID = Habillage.GRILLE;
-    private static final Color AXIS = Habillage.TEXTE_DOUX;
+    private static final Color AXIS = Habillage.MODE_ECRAN;
     private static final Color CURVE = Habillage.CHIFFRES;
-    private static final Color TANGENT = Habillage.AMBRE;
+    private static final Color TANGENT = Habillage.ORANGE;
     private static final Color AREA = new Color(CURVE.getRed(), CURVE.getGreen(), CURVE.getBlue(), 50);
-    private static final Color POINT = Habillage.TEXTE;
+    private static final Color POINT = Habillage.CHIFFRES;
     private static final double POINT_SIZE = 7;
 
     private transient EchantillonCourbe aSample;
@@ -108,7 +108,7 @@ class TraceCourbe extends JPanel {
         double vStepX = EchantillonCourbe.niceStep(aSample.xMax() - aSample.xMin());
         double vStepY = EchantillonCourbe.niceStep(aSample.yMax() - aSample.yMin());
         pG.setStroke(new BasicStroke(1f));
-        for (double vX = Math.ceil(aSample.xMin() / vStepX) * vStepX; vX <= aSample.xMax(); vX += vStepX) {
+        for (double vX : EchantillonCourbe.graduations(aSample.xMin(), aSample.xMax(), vStepX)) {
             double vPixel = toPixelX(pPlot, vX);
             pG.setColor(GRID);
             pG.draw(new Line2D.Double(vPixel, pPlot.getMinY(), vPixel, pPlot.getMaxY()));
@@ -116,7 +116,7 @@ class TraceCourbe extends JPanel {
             String vLabel = Affichage.format(vX);
             pG.drawString(vLabel, (float) (vPixel - vMetrics.stringWidth(vLabel) / 2.0), (float) (pPlot.getMaxY() + 16));
         }
-        for (double vY = Math.ceil(aSample.yMin() / vStepY) * vStepY; vY <= aSample.yMax(); vY += vStepY) {
+        for (double vY : EchantillonCourbe.graduations(aSample.yMin(), aSample.yMax(), vStepY)) {
             double vPixel = toPixelY(pPlot, vY);
             pG.setColor(GRID);
             pG.draw(new Line2D.Double(pPlot.getMinX(), vPixel, pPlot.getMaxX(), vPixel));

@@ -86,6 +86,22 @@ final class EchantillonCourbe {
     }
 
     /**
+     * Repères d'un axe, multiples du pas compris entre les bornes. Chaque repère est recalculé
+     * depuis son rang : ajouter le pas en boucle laissait 1.2E-16 à la place de 0.
+     */
+    static double[] graduations(double pMin, double pMax, double pStep) {
+        long vFirst = (long) Math.ceil(pMin / pStep);
+        long vLast = (long) Math.floor(pMax / pStep);
+        double[] rTicks = new double[(int) Math.max(vLast - vFirst + 1, 0)];
+        for (int vIndex = 0; vIndex < rTicks.length; vIndex++) {
+            double vTick = (vFirst + vIndex) * pStep;
+            // Arrondi au chiffre significatif du pas, pour 0.30000000000000004 comme pour 0
+            rTicks[vIndex] = Math.abs(vTick) < pStep * 1e-9 ? 0 : vTick;
+        }
+        return rTicks;
+    }
+
+    /**
      * Pas « rond » (1, 2, 5 fois une puissance de 10) qui donne environ huit repères sur l'étendue.
      */
     static double niceStep(double pRange) {

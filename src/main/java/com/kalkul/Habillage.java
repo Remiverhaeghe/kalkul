@@ -16,35 +16,38 @@ import javax.swing.plaf.metal.DefaultMetalTheme;
 import javax.swing.plaf.metal.MetalLookAndFeel;
 
 /**
- * Habillage de Kalkul : couleurs graphite, écran à chiffres cyan et touches colorées selon leur rôle,
- * ou version claire quand Windows est en mode clair.
- * Tout passe par Swing, sans bibliothèque de thème.
+ * Habillage de Kalkul, inspiré des calculatrices de bureau des années 70 : corps noir mat, touches
+ * rondes en relief, opérateurs olive, « = » moutarde et écran à cristaux liquides gris-vert.
+ * Version gris clair quand Windows est en mode clair. Tout passe par Swing, sans bibliothèque de thème.
  */
 final class Habillage {
     /** Thème clair, décidé une fois au démarrage (voir {@link ThemeSysteme}). */
     static final boolean CLAIR = ThemeSysteme.estClair();
 
-    static final Color FOND = couleur(0x1E2126, 0xE9ECF0);
-    static final Color SURFACE = couleur(0x272B31, 0xF5F6F8);
-    static final Color CHAMP = couleur(0x15171B, 0xFFFFFF);
-    static final Color BORDURE = couleur(0x3A3F47, 0xC5CBD3);
-    static final Color TEXTE = couleur(0xE6E8EB, 0x1E2126);
-    static final Color TEXTE_DOUX = couleur(0x9AA1AB, 0x5B636E);
-    static final Color ECRAN = couleur(0x0E1416, 0xD7E4DF);
-    static final Color CHIFFRES = couleur(0x5CE1E6, 0x123A40);
-    static final Color AMBRE = couleur(0xF0A23B, 0xB86B0C);
-    static final Color CADRE_ECRAN = couleur(0x2A3338, 0xA9BDB6);
-    static final Color MODE_ECRAN = couleur(0x3E8E92, 0x4F6E6A);
-    static final Color ERREUR_ECRAN = couleur(0xFF8A7A, 0xB3261E);
-    static final Color GRILLE = couleur(0x1F282C, 0xC2D3CD);
+    static final Color FOND = couleur(0x1A1A18, 0xD9D6CE);
+    static final Color SURFACE = couleur(0x22221F, 0xE6E3DC);
+    static final Color CHAMP = couleur(0x121211, 0xF7F5F0);
+    static final Color BORDURE = couleur(0x3A3934, 0xB5B1A7);
+    static final Color TEXTE = couleur(0xECE9E1, 0x1E1D1A);
+    static final Color TEXTE_DOUX = couleur(0x9C988D, 0x5E5A51);
+    // Écran à cristaux liquides : fond gris-vert, segments presque noirs, dans les deux thèmes
+    static final Color ECRAN = couleur(0x9DA58C, 0xA9B197);
+    static final Color CHIFFRES = couleur(0x1C2118, 0x1B2016);
+    static final Color MOUTARDE = couleur(0xE2B33C, 0xD9A52A);
+    static final Color ORANGE = couleur(0xC4572C, 0xB8502E);
+    static final Color OLIVE = couleur(0x5C6447, 0x6B7352);
+    static final Color CADRE_ECRAN = couleur(0x0B0B0A, 0x3A3934);
+    static final Color MODE_ECRAN = couleur(0x4D5543, 0x4D5543);
+    static final Color ERREUR_ECRAN = couleur(0x7A2414, 0x7A2414);
+    static final Color GRILLE = couleur(0x8E967E, 0x98A086);
 
     /** Rôle d'une touche, qui fixe sa couleur. */
     enum Role {
-        CHIFFRE(couleur(0x30353C, 0xFFFFFF), TEXTE),
-        OPERATEUR(couleur(0x3A3226, 0xF8E6CC), AMBRE),
-        FONCTION(couleur(0x262A30, 0xDDE2E8), couleur(0xB8C4D0, 0x34404D)),
-        EGAL(AMBRE, couleur(0x1E1A12, 0xFFFFFF)),
-        EFFACER(couleur(0x4A2A27, 0xF6D5CF), couleur(0xFF9C8A, 0xA3301D));
+        CHIFFRE(couleur(0x2F2E2B, 0xF4F2EC), couleur(0xF1EEE6, 0x1E1D1A)),
+        OPERATEUR(OLIVE, couleur(0xF1EEE6, 0xFAF8F2)),
+        FONCTION(couleur(0x252522, 0xC9C5BB), couleur(0xB9B4A6, 0x2B2A26)),
+        EGAL(MOUTARDE, couleur(0x1A1A18, 0x1E1D1A)),
+        EFFACER(ORANGE, couleur(0xFAF8F2, 0xFAF8F2));
 
         final Color aFond;
         final Color aTexte;
@@ -126,7 +129,7 @@ final class Habillage {
      * Applique le thème à toute l'application ; à appeler avant de créer la première fenêtre.
      */
     static void appliquer() {
-        MetalLookAndFeel.setCurrentTheme(new ThemeGraphite());
+        MetalLookAndFeel.setCurrentTheme(new ThemeInstrument());
         try {
             UIManager.setLookAndFeel(new MetalLookAndFeel());
         } catch (UnsupportedLookAndFeelException vException) {
@@ -138,7 +141,7 @@ final class Habillage {
         UIManager.put("TabbedPane.borderHightlightColor", BORDURE);
         UIManager.put("TabbedPane.tabAreaBackground", FOND);
         UIManager.put("TabbedPane.unselectedBackground", FOND);
-        UIManager.put("TabbedPane.focus", AMBRE);
+        UIManager.put("TabbedPane.focus", MOUTARDE);
         UIManager.put("TabbedPane.highlight", BORDURE);
         UIManager.put("TabbedPane.light", BORDURE);
         UIManager.put("TabbedPane.darkShadow", BORDURE);
@@ -157,10 +160,10 @@ final class Habillage {
         UIManager.put("TableHeader.background", SURFACE);
     }
 
-    /** Thème Metal recoloré : fonds graphite et textes clairs, ou l'inverse en thème clair, accent ambre. */
-    private static final class ThemeGraphite extends DefaultMetalTheme {
-        private static final ColorUIResource PRIMAIRE_1 = new ColorUIResource(AMBRE);
-        private static final ColorUIResource PRIMAIRE_2 = new ColorUIResource(couleur(0x6B5A3E, 0xD9B47E));
+    /** Thème Metal recoloré : corps noir mat et textes clairs, ou l'inverse en thème clair, accent moutarde. */
+    private static final class ThemeInstrument extends DefaultMetalTheme {
+        private static final ColorUIResource PRIMAIRE_1 = new ColorUIResource(MOUTARDE);
+        private static final ColorUIResource PRIMAIRE_2 = new ColorUIResource(couleur(0x6E5B2A, 0xC9A458));
         private static final ColorUIResource PRIMAIRE_3 = new ColorUIResource(Role.OPERATEUR.aFond);
         private static final ColorUIResource SECONDAIRE_1 = new ColorUIResource(BORDURE);
         private static final ColorUIResource SECONDAIRE_2 = new ColorUIResource(Role.CHIFFRE.aFond);
@@ -170,7 +173,7 @@ final class Habillage {
 
         @Override
         public String getName() {
-            return CLAIR ? "Clair" : "Graphite";
+            return CLAIR ? "Gris clair" : "Noir mat";
         }
 
         @Override

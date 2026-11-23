@@ -29,4 +29,10 @@ class HabillageTest {
         assertEquals("×", vKey.getText());
         assertEquals("*", vKey.getActionCommand());
     }
+
+    @Test
+    void keyShadeStaysWithinColorRange() {
+        assertEquals(new java.awt.Color(255, 255, 255), Touche.nuance(new java.awt.Color(250, 250, 250), 16));
+        assertEquals(new java.awt.Color(0, 4, 10), Touche.nuance(new java.awt.Color(10, 18, 24), -14));
+    }
 }

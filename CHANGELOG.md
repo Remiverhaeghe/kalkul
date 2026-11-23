@@ -2,6 +2,15 @@
 
 ## Non publié
 
+### Habillage
+- Nouvel habillage inspiré des calculatrices de bureau des années 70 : corps noir mat, touches rondes en relief (dôme éclairé par le haut, cuvette au centre, enfoncées à l'appui), opérateurs olive, « = » moutarde, effacement orange
+- Écran à cristaux liquides gris-vert enfoncé dans un cadre noir, dans les deux thèmes ; la courbe de l'onglet Graphique se trace sur le même fond
+- Thème clair en gris chaud, touches de chiffres blanches
+- Captures du README refaites
+
+### Corrections
+- Graphique : le repère 0 de l'axe affichait un reste d'arrondi (1.2E-16, tronqué) ; les repères sont recalculés depuis leur rang
+
 ### Fonctionnalités
 - Devises dans l'onglet Outils, sans connexion : taux tapés à la main (1 EUR = …) ou importés d'un fichier (eurofxref.csv de la BCE, ou lignes « USD;1,08 »), gardés d'une session à l'autre et toujours affichés avec leur date ; alerte quand ils ont plus d'une semaine
 - Historique : champ de recherche (calcul ou résultat, « * », « / » et « - » trouvent « × », « ÷ » et « − ») et export en CSV de ce qui est affiché, séparé par des points-virgules pour un tableur en français
