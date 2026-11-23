@@ -49,8 +49,6 @@ L'onglet Outils est rangé en quatre sous-onglets : Statistiques, Second degré,
 | Outils | Moyenne, variance et écart-type ; équation du second degré ; conversion de longueurs, masses, volumes et températures ; règle de trois, pourcentages et remises |
 | Feuille | Cellules nommées, réutilisées par les formules enregistrées |
 
-Prévu ensuite : taux de change en ligne.
-
 Stack : Java 17, Maven, JUnit 5.
 
 ## Lancement
