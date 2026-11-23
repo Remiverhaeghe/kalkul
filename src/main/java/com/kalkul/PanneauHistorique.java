@@ -95,6 +95,9 @@ class PanneauHistorique extends JPanel {
         JButton vExport = new JButton("Exporter en CSV…");
         vExport.setFocusable(false);
         vExport.addActionListener(pEvent -> exporter());
+        JButton vExportPdf = new JButton("Exporter en PDF…");
+        vExportPdf.setFocusable(false);
+        vExportPdf.addActionListener(pEvent -> exporterPdf());
         JButton vClear = new JButton("Vider l'historique");
         vClear.setFocusable(false);
         vClear.addActionListener(pEvent -> {
@@ -107,6 +110,8 @@ class PanneauHistorique extends JPanel {
         vBottom.add(vClear);
         vBottom.add(javax.swing.Box.createHorizontalStrut(8));
         vBottom.add(vExport);
+        vBottom.add(javax.swing.Box.createHorizontalStrut(8));
+        vBottom.add(vExportPdf);
 
         add(vTop, BorderLayout.NORTH);
         add(new JScrollPane(aList), BorderLayout.CENTER);
@@ -143,6 +148,25 @@ class PanneauHistorique extends JPanel {
         try {
             // Marque UTF-8 en tête : sans elle, un tableur sous Windows abîme les accents et les signes
             Files.writeString(vChooser.getSelectedFile().toPath(), "\uFEFF" + csv(), StandardCharsets.UTF_8);
+        } catch (IOException vException) {
+            JOptionPane.showMessageDialog(this, "Le fichier n'a pas pu être écrit : " + vException.getMessage(),
+                    "Export", JOptionPane.ERROR_MESSAGE);
+        }
+    }
+
+    /** Calculs affichés, ceux que la recherche garde, en PDF. */
+    byte[] pdf() {
+        return Historique.enPdf(Historique.filtrer(aAll, aSearch.getText()), java.time.LocalDate.now());
+    }
+
+    private void exporterPdf() {
+        JFileChooser vChooser = new JFileChooser();
+        vChooser.setSelectedFile(new File("historique-kalkul.pdf"));
+        if (vChooser.showSaveDialog(this) != JFileChooser.APPROVE_OPTION) {
+            return;
+        }
+        try {
+            Files.write(vChooser.getSelectedFile().toPath(), pdf());
         } catch (IOException vException) {
             JOptionPane.showMessageDialog(this, "Le fichier n'a pas pu être écrit : " + vException.getMessage(),
                     "Export", JOptionPane.ERROR_MESSAGE);

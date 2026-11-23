@@ -82,6 +82,7 @@ public class Kalkul extends JFrame {
         add(vTabs, BorderLayout.CENTER);
 
         addKeyBindings();
+        installTabShortcuts(vTabs);
         setVisible(true);
     }
 
@@ -171,6 +172,38 @@ public class Kalkul extends JFrame {
         aEngine.reprendre(pValue);
         aDisplay.afficher(aEngine.getDisplay(), aEngine.isDegrees());
         aDisplay.rappel("");
+    }
+
+    // Un raccourci par onglet, relu à chaque changement dans les réglages
+    private void installTabShortcuts(JTabbedPane pTabs) {
+        Raccourcis vRaccourcis = Raccourcis.partage();
+        Runnable vInstall = () -> {
+            InputMap vInputMap = getRootPane().getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
+            ActionMap vActionMap = getRootPane().getActionMap();
+            for (Raccourcis.Onglet vOnglet : Raccourcis.Onglet.values()) {
+                String vNom = "onglet_" + vOnglet.name();
+                // Les anciennes touches de cette action sont retirées avant d'en poser une autre
+                for (KeyStroke vAncienne : vInputMap.allKeys() == null ? new KeyStroke[0] : vInputMap.allKeys()) {
+                    if (vNom.equals(vInputMap.get(vAncienne))) {
+                        vInputMap.remove(vAncienne);
+                    }
+                }
+                vInputMap.put(vRaccourcis.touche(vOnglet), vNom);
+                vActionMap.put(vNom, new AbstractAction() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void actionPerformed(ActionEvent pEvent) {
+                        int vIndex = pTabs.indexOfTab(vOnglet.titre());
+                        if (vIndex >= 0) {
+                            pTabs.setSelectedIndex(vIndex);
+                        }
+                    }
+                });
+            }
+        };
+        vInstall.run();
+        vRaccourcis.ecouter(vInstall);
     }
 
     private void addKeyBindings() {

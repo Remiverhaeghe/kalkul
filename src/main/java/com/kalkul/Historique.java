@@ -1,5 +1,8 @@
 package com.kalkul;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
@@ -32,6 +35,24 @@ final class Historique {
                     .append("\r\n");
         }
         return rCsv.toString();
+    }
+
+    /**
+     * Historique en PDF : un titre, la date, puis une ligne « calcul = résultat » par calcul. Plusieurs pages
+     * au besoin ; un historique vide donne une page avec la mention « Aucun calcul ».
+     */
+    static byte[] enPdf(List<MoteurCalcul.Calcul> pCalculs, LocalDate pDate) {
+        List<String> vLignes = new ArrayList<>();
+        vLignes.add("Édité le " + pDate.format(DateTimeFormatter.ofPattern("dd/MM/yyyy")));
+        vLignes.add("");
+        if (pCalculs.isEmpty()) {
+            vLignes.add("Aucun calcul");
+        }
+        for (MoteurCalcul.Calcul vCalcul : pCalculs) {
+            // Le vrai signe moins (−) n'existe pas en Windows-1252 : il est écrit « - » dans le PDF
+            vLignes.add((vCalcul.expression() + " = " + vCalcul.resultat()).replace('−', '-'));
+        }
+        return PdfTexte.ecrire("Historique des calculs", vLignes);
     }
 
     // Guillemets autour d'un champ qui contient le séparateur, un guillemet ou un saut de ligne
