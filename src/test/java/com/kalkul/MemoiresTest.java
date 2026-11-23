@@ -97,6 +97,6 @@ class MemoiresTest {
         vMemoires.enregistrer("prix", "12.5");
         vMemoires.enregistrer("a", "2");
 
-        assertEquals("a = 2 · prix = 12,5", PanneauMemoires.resume(vMemoires));
+        assertEquals("a = 2 · prix = " + PanneauOutils.format(12.5), PanneauMemoires.resume(vMemoires));
     }
 }
