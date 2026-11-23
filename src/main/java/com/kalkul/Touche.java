@@ -18,7 +18,7 @@ import javax.swing.JButton;
 class Touche extends JButton {
     private static final long serialVersionUID = 1L;
     // Espace laissé autour de la touche ronde, dans sa case
-    private static final int MARGE = 5;
+    private static final int MARGE = 6;
 
     private final Habillage.Role aRole;
 
@@ -27,7 +27,7 @@ class Touche extends JButton {
         setActionCommand(pLabel);
         aRole = Habillage.role(pLabel);
         boolean vSigne = pLabel.length() == 1 && aRole != Habillage.Role.EFFACER;
-        setFont(vSigne ? Habillage.chiffres(Font.BOLD, 24) : Habillage.texte(Font.BOLD, 16));
+        setFont(vSigne ? Habillage.texte(Font.PLAIN, 27) : Habillage.texte(Font.BOLD, 16));
         setForeground(aRole.aTexte);
         setContentAreaFilled(false);
         setBorderPainted(false);

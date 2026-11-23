@@ -136,8 +136,9 @@ final class Habillage {
             // Metal est fourni par tout JDK : on garde l'apparence par défaut sinon
             return;
         }
+        UIManager.put("TabbedPaneUI", OngletsInstrument.class.getName());
         UIManager.put("TabbedPane.selected", SURFACE);
-        UIManager.put("TabbedPane.contentAreaColor", SURFACE);
+        UIManager.put("TabbedPane.contentAreaColor", FOND);
         UIManager.put("TabbedPane.borderHightlightColor", BORDURE);
         UIManager.put("TabbedPane.tabAreaBackground", FOND);
         UIManager.put("TabbedPane.unselectedBackground", FOND);

@@ -12,13 +12,14 @@ import java.awt.geom.RoundRectangle2D;
 import javax.swing.JComponent;
 
 /**
- * Écran de la calculatrice : afficheur à cristaux liquides gris-vert enfoncé dans un cadre noir,
- * mode d'angle en petit. Le texte trop long rétrécit au lieu d'être coupé.
+ * Écran de la calculatrice : afficheur à cristaux liquides gris-vert enfoncé dans un cadre noir, chiffres
+ * à sept segments ({@link SeptSegments}), mode d'angle en petit. Le texte trop long rétrécit au lieu d'être coupé.
  */
 class Ecran extends JComponent {
     private static final long serialVersionUID = 1L;
     private static final int TAILLE_MAX = 44;
     private static final int TAILLE_MIN = 16;
+    private static final int HAUTEUR_MAX = 48;
     private static final int MARGE = 18;
 
     private String aValeur = "0";
@@ -27,7 +28,7 @@ class Ecran extends JComponent {
     private String aRappel = "";
 
     Ecran() {
-        setPreferredSize(new Dimension(400, 104));
+        setPreferredSize(new Dimension(400, 118));
     }
 
     void afficher(String pValeur, boolean pDegres) {
@@ -47,6 +48,17 @@ class Ecran extends JComponent {
 
     String valeur() {
         return aValeur;
+    }
+
+    /**
+     * Plus grande hauteur de chiffres à sept segments, de 48 à 16 points, qui tient dans la largeur donnée.
+     */
+    double hauteurQuiTient(int pLargeur) {
+        double rHauteur = HAUTEUR_MAX;
+        while (rHauteur > TAILLE_MIN && SeptSegments.largeur(aValeur, rHauteur) > pLargeur) {
+            rHauteur -= 2;
+        }
+        return rHauteur;
     }
 
     /**
@@ -91,13 +103,20 @@ class Ecran extends JComponent {
         }
 
         int vLargeur = getWidth() - 2 * MARGE - 12;
-        Font vChiffres = Habillage.chiffres(Font.PLAIN, tailleQuiTient(vG, vLargeur));
-        vG.setFont(vChiffres);
-        FontMetrics vMetrics = vG.getFontMetrics();
-        int vX = getWidth() - MARGE - 6 - vMetrics.stringWidth(aValeur);
-        int vY = getHeight() - 24;
-        vG.setColor(MoteurCalcul.ERREUR.equals(aValeur) ? Habillage.ERREUR_ECRAN : Habillage.CHIFFRES);
-        vG.drawString(aValeur, vX, vY);
+        int vDroite = getWidth() - MARGE - 6;
+        int vBas = getHeight() - 26;
+        Color vEncre = MoteurCalcul.ERREUR.equals(aValeur) ? Habillage.ERREUR_ECRAN : Habillage.CHIFFRES;
+        if (SeptSegments.sait(aValeur)) {
+            double vHauteur = hauteurQuiTient(vLargeur);
+            Color vEteint = new Color(Habillage.CHIFFRES.getRed(), Habillage.CHIFFRES.getGreen(),
+                    Habillage.CHIFFRES.getBlue(), 16);
+            SeptSegments.dessiner(vG, aValeur, MARGE + 6, vDroite, vBas, vHauteur, vEncre, vEteint);
+        } else {
+            vG.setFont(Habillage.chiffres(Font.PLAIN, tailleQuiTient(vG, vLargeur)));
+            FontMetrics vMetrics = vG.getFontMetrics();
+            vG.setColor(vEncre);
+            vG.drawString(aValeur, vDroite - vMetrics.stringWidth(aValeur), vBas);
+        }
         vG.dispose();
     }
 }

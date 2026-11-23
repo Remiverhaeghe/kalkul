@@ -3,11 +3,11 @@
 Calculatrice de bureau en Java Swing, avec un onglet par famille de calculs. Le clavier fonctionne comme les boutons.
 
 <p>
-  <img src="docs/calculatrice.png" alt="Onglet Base : écran LCD gris-vert, touches rondes sur corps noir mat, opérateurs olive, égal moutarde" width="360">
+  <img src="docs/calculatrice.png" alt="Onglet Base : écran LCD gris-vert à sept segments, touches rondes sur corps noir mat, opérateurs olive, égal moutarde" width="360">
   <img src="docs/scientifique.png" alt="Onglet Scientifique avec le choix degrés ou radians" width="360">
 </p>
 
-L'habillage, inspiré des calculatrices de bureau des années 70, est fait en Swing seul, sans bibliothèque de thème : thème Metal recoloré en noir mat (`Habillage`), touches rondes en relief colorées selon leur rôle, olive pour les opérateurs, moutarde pour « = » et orange pour l'effacement (`Touche`), écran à cristaux liquides gris-vert enfoncé dans son cadre, qui rétrécit les nombres trop longs (`Ecran`). La courbe de l'onglet Graphique se trace sur le même fond que l'écran.
+L'habillage, inspiré des calculatrices de bureau des années 70, est fait en Swing seul, sans bibliothèque de thème : thème Metal recoloré en noir mat (`Habillage`), touches rondes en relief colorées selon leur rôle, olive pour les opérateurs, moutarde pour « = » et orange pour l'effacement (`Touche`), écran à cristaux liquides gris-vert enfoncé dans son cadre, chiffres dessinés en sept segments avec les cases éteintes visibles, qui rétrécissent quand le nombre est trop long (`Ecran`, `SeptSegments`), onglets à plat soulignés de moutarde (`OngletsInstrument`). La courbe de l'onglet Graphique se trace sur le même fond que l'écran.
 
 Le thème suit Windows : si les applications sont en mode clair, Kalkul passe en clair (fond gris perle, afficheur façon cristaux liquides). On peut l'imposer au lancement avec `-Dkalkul.theme=clair` ou `-Dkalkul.theme=sombre`.
 

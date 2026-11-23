@@ -5,6 +5,9 @@
 ### Habillage
 - Nouvel habillage inspiré des calculatrices de bureau des années 70 : corps noir mat, touches rondes en relief (dôme éclairé par le haut, cuvette au centre, enfoncées à l'appui), opérateurs olive, « = » moutarde, effacement orange
 - Écran à cristaux liquides gris-vert enfoncé dans un cadre noir, dans les deux thèmes ; la courbe de l'onglet Graphique se trace sur le même fond
+- Chiffres de l'écran dessinés en sept segments, légèrement penchés, avec les cases éteintes visibles comme sur un vrai afficheur ; les textes que les segments ne savent pas écrire gardent la police
+- Onglets à plat, l'onglet ouvert souligné de moutarde
+- Pavé en cases carrées centrées : les touches restent serrées quelle que soit la taille de la fenêtre, chiffres dans une police sans empattement
 - Thème clair en gris chaud, touches de chiffres blanches
 - Captures du README refaites
 
