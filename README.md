@@ -13,7 +13,7 @@ Le thème suit Windows : si les applications sont en mode clair, Kalkul passe en
 
 <img src="docs/theme-clair.png" alt="Onglet Base en thème clair : corps gris clair, touches de chiffres blanches, opérateurs olive" width="300">
 
-L'onglet Historique garde les 50 derniers calculs ; un double-clic remet le résultat à l'écran, et le calcul qui vient d'être fait s'affiche en petit au-dessus du nombre. Un champ cherche dans la liste, et « Exporter en CSV… » enregistre ce qui est affiché.
+L'onglet Historique garde les 50 derniers calculs ; un double-clic remet le résultat à l'écran, et le calcul qui vient d'être fait s'affiche en petit au-dessus du nombre. Un champ cherche dans la liste, et « Exporter en CSV… » enregistre ce qui est affiché et « Exporter en PDF… » en fait un document A4 paginé.
 
 Le sous-onglet Mémoires (Outils) garde des valeurs sous un nom, comme `prix = 12,5`, et les relit dans une formule : `total = prix * 3`. Elles restent d'une session à l'autre.
 
@@ -39,7 +39,7 @@ Une formule de l'onglet Graphique s'enregistre avec ses paramètres (20 au plus,
 
 L'onglet Feuille garde jusqu'à 12 cellules nommées (`surface = 4.2*3.5`, `prix = surface*24.9`), d'une session à l'autre. Une cellule peut reprendre les autres ; une référence circulaire ou une valeur manquante est refusée. Les noms ne prennent que des lettres sans accent, et pas `x`, `pi`, `e` ni un nom de fonction. Les cellules servent de variables aux formules enregistrées, dans l'onglet Feuille, dans « f(écran) » et dans les courbes ; un paramètre de la formule passe avant une cellule du même nom.
 
-L'onglet Outils est rangé en quatre sous-onglets : Statistiques, Second degré, Unités et Proportions. Comme ceux de Chantier, ils défilent quand la fenêtre est trop petite. Proportions réunit la règle de trois et les pourcentages : pourcentage d'une valeur, part en %, variation, prix après une ou deux remises successives (20 % puis 10 % font 28 %), prix avant remise et prix au mètre carré.
+L'onglet Outils est rangé en quatre sous-onglets : Statistiques (moyenne, médiane, quartiles, écarts-types, histogramme), Second degré, Unités et Proportions. Comme ceux de Chantier, ils défilent quand la fenêtre est trop petite. Proportions réunit la règle de trois et les pourcentages : pourcentage d'une valeur, part en %, variation, prix après une ou deux remises successives (20 % puis 10 % font 28 %), prix avant remise et prix au mètre carré.
 
 | Onglet | Contenu |
 |---|---|
@@ -110,3 +110,7 @@ Les opérations s'enchaînent de gauche à droite, sans priorité : `2 + 3 * 4` 
 ## Licence
 
 MIT, voir [LICENSE](LICENSE).
+
+## Raccourcis des onglets
+
+Ctrl+1 à Ctrl+9 ouvrent les onglets dans l'ordre. Outils > Réglages permet de les changer ; un raccourci sans modificateur ou déjà utilisé est refusé.

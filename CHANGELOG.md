@@ -2,6 +2,10 @@
 
 ## Non publié
 
+### Statistiques, export PDF et raccourcis
+- Statistiques étendues (Outils) : médiane, quartiles Q1 et Q3 (interpolation comme QUARTILE.INC), minimum, maximum, écarts-types d'échantillon et de population, et histogramme dont le nombre de classes suit la règle de Sturges
+- « Exporter en PDF… » dans l'onglet Historique : un PDF A4 en texte, paginé, avec la date d'édition ; écrit sans bibliothèque
+- Raccourcis clavier des onglets réglables (Outils > Réglages), Ctrl+1 à Ctrl+9 au départ ; un raccourci sans modificateur, illisible ou déjà pris est refusé, et un bouton remet les valeurs d'origine
 ### Mémoires nommées
 - Mémoires nommées (Outils, sous-onglet Mémoires) : une valeur gardée sous un nom en lettres (« prix »), calculée à partir d'une formule qui peut citer d'autres mémoires (« prix * 3 »), conservée d'une session à l'autre ; les noms de fonctions, de constantes et « x » sont refusés
 ### Habillage des formulaires et clavier

@@ -34,7 +34,7 @@ class PanneauOutils extends JPanel {
     PanneauOutils(Devises pDevises, Memoires pMemoires) {
         super(new BorderLayout());
         JTabbedPane vOnglets = SousOnglets.creer();
-        SousOnglets.ajouter(vOnglets, "Statistiques", buildStatistics());
+        SousOnglets.ajouter(vOnglets, "Statistiques", PanneauStatistiques.construire());
         SousOnglets.ajouter(vOnglets, "Second degré", buildQuadratic());
         SousOnglets.ajouter(vOnglets, "Unités", buildConversion());
         SousOnglets.ajouter(vOnglets, "Proportions", PanneauProportions.construire());
@@ -42,20 +42,6 @@ class PanneauOutils extends JPanel {
         SousOnglets.ajouter(vOnglets, "Mémoires", PanneauMemoires.construire(pMemoires));
         SousOnglets.ajouter(vOnglets, "Réglages", Reglages.construire());
         add(vOnglets, BorderLayout.CENTER);
-    }
-
-    private JPanel buildStatistics() {
-        JPanel vSection = section("Statistiques (nombres séparés par des espaces)");
-        JTextField vInput = new JTextField(22);
-        JLabel vResult = new JLabel(" ");
-        vSection.add(row(vInput, button("Calculer", vResult, () -> {
-            double[] vValues = FonctionsScientifiques.parseNumbers(vInput.getText());
-            return "Moyenne " + format(FonctionsScientifiques.mean(vValues))
-                    + " | variance " + format(FonctionsScientifiques.variance(vValues))
-                    + " | écart-type " + format(FonctionsScientifiques.standardDeviation(vValues));
-        })));
-        vSection.add(vResult);
-        return vSection;
     }
 
     private JPanel buildQuadratic() {
