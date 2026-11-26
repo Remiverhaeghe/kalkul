@@ -8,6 +8,7 @@ import java.util.prefs.Preferences;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
@@ -17,6 +18,7 @@ import javax.swing.JTextField;
  */
 final class Reglages {
     static final String SON = "son_touches";
+    static final String THEME = "theme";
     private static final Preferences PREFERENCES = Preferences.userNodeForPackage(Kalkul.class);
 
     private Reglages() {
@@ -28,6 +30,16 @@ final class Reglages {
 
     static void sonDesTouches(boolean pActif) {
         PREFERENCES.putBoolean(SON, pActif);
+    }
+
+    /** Thème gardé : « auto » (comme Windows), « clair » ou « sombre » ; pris au prochain démarrage. */
+    static String theme() {
+        String rTheme = PREFERENCES.get(THEME, "auto");
+        return rTheme;
+    }
+
+    static void theme(String pTheme) {
+        PREFERENCES.put(THEME, pTheme);
     }
 
     // Un champ par onglet : Entrée enregistre, un raccourci refusé garde l'ancien et dit pourquoi
@@ -79,6 +91,11 @@ final class Reglages {
         vSon.setOpaque(false);
         vSon.addActionListener(pEvent -> sonDesTouches(vSon.isSelected()));
         rSection.add(PanneauOutils.row(vSon));
+        String[] vValeurs = {"auto", "clair", "sombre"};
+        JComboBox<String> vTheme = new JComboBox<>(new String[] {"Comme Windows", "Clair", "Sombre"});
+        vTheme.setSelectedIndex(Math.max(0, java.util.Arrays.asList(vValeurs).indexOf(theme())));
+        vTheme.addActionListener(pEvent -> theme(vValeurs[vTheme.getSelectedIndex()]));
+        rSection.add(PanneauOutils.row(new JLabel("Thème (au prochain démarrage)"), vTheme));
         rSection.add(raccourcis());
         return rSection;
     }

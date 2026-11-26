@@ -1,7 +1,14 @@
 package com.kalkul;
 
 import java.awt.BorderLayout;
+import java.awt.Toolkit;
+import java.awt.datatransfer.DataFlavor;
+import java.awt.datatransfer.StringSelection;
+import java.awt.datatransfer.Transferable;
+import java.awt.datatransfer.UnsupportedFlavorException;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyEvent;
+import java.io.IOException;
 import javax.swing.AbstractAction;
 import javax.swing.ActionMap;
 import javax.swing.BorderFactory;
@@ -168,6 +175,33 @@ public class Kalkul extends JFrame {
         }
     }
 
+    // Ctrl+C copie le nombre affiché, Ctrl+V colle un nombre ; un champ de texte garde ses propres raccourcis
+    private void copier() {
+        String vTexte = aEngine.texteACopier();
+        if (!vTexte.isEmpty()) {
+            try {
+                Toolkit.getDefaultToolkit().getSystemClipboard().setContents(new StringSelection(vTexte), null);
+            } catch (IllegalStateException vException) {
+                // Presse-papiers occupé par une autre application : rien à copier cette fois
+                return;
+            }
+        }
+    }
+
+    private void coller() {
+        try {
+            Transferable vContenu = Toolkit.getDefaultToolkit().getSystemClipboard().getContents(null);
+            if (vContenu != null && vContenu.isDataFlavorSupported(DataFlavor.stringFlavor)
+                    && aEngine.coller((String) vContenu.getTransferData(DataFlavor.stringFlavor))) {
+                aDisplay.afficher(aEngine.getDisplay(), aEngine.isDegrees());
+                aDisplay.rappel("");
+            }
+        } catch (IllegalStateException | UnsupportedFlavorException | IOException vException) {
+            // Rien d'utilisable dans le presse-papiers : l'écran ne change pas
+            return;
+        }
+    }
+
     private void reuse(String pValue) {
         aEngine.reprendre(pValue);
         aDisplay.afficher(aEngine.getDisplay(), aEngine.isDegrees());
@@ -210,6 +244,26 @@ public class Kalkul extends JFrame {
         JRootPane vRoot = getRootPane();
         InputMap vInputMap = vRoot.getInputMap(JComponent.WHEN_IN_FOCUSED_WINDOW);
         ActionMap vActionMap = vRoot.getActionMap();
+
+        int vMasque = Toolkit.getDefaultToolkit().getMenuShortcutKeyMaskEx();
+        vInputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_C, vMasque), "copier");
+        vActionMap.put("copier", new AbstractAction() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void actionPerformed(ActionEvent pEvent) {
+                copier();
+            }
+        });
+        vInputMap.put(KeyStroke.getKeyStroke(KeyEvent.VK_V, vMasque), "coller");
+        vActionMap.put("coller", new AbstractAction() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void actionPerformed(ActionEvent pEvent) {
+                coller();
+            }
+        });
 
         // La touche c efface, comme le bouton C
         for (char vKey : (KEYS + "c").toCharArray()) {

@@ -223,6 +223,44 @@ public class MoteurCalcul {
     }
 
     /**
+     * Nombre contenu dans un texte collé : espaces (même insécables) ignorés, virgule décimale
+     * acceptée ; null pour tout ce qui n'est pas un nombre fini.
+     */
+    static String nombreDepuisTexte(String pTexte) {
+        String rNombre = null;
+        if (pTexte != null) {
+            String vTexte = pTexte.replaceAll("[\\s\\u00A0\\u202F]", "").replace(',', '.');
+            if (vTexte.matches("[+-]?(\\d+\\.?\\d*|\\.\\d+)([eE][+-]?\\d+)?")) {
+                double vValeur = Double.parseDouble(vTexte);
+                if (!Double.isInfinite(vValeur) && !Double.isNaN(vValeur)) {
+                    rNombre = trimZeros(vValeur);
+                }
+            }
+        }
+        return rNombre;
+    }
+
+    /**
+     * Colle un nombre à l'écran pour continuer le calcul avec ; vrai si le texte était un nombre.
+     */
+    public boolean coller(String pTexte) {
+        String vNombre = nombreDepuisTexte(pTexte);
+        boolean rColle = vNombre != null;
+        if (rColle) {
+            reprendre(vNombre);
+        }
+        return rColle;
+    }
+
+    /**
+     * Texte à copier : le nombre affiché, rien quand l'écran montre une erreur.
+     */
+    public String texteACopier() {
+        String rTexte = ERREUR.equals(aDisplay) ? "" : aDisplay;
+        return rTexte;
+    }
+
+    /**
      * Affiche un résultat calculé ailleurs (une formule enregistrée) et le garde dans l'historique.
      */
     public void afficherResultat(String pExpression, double pResult) {

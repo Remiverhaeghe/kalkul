@@ -28,6 +28,17 @@ class ThemeSystemeTest {
     }
 
     @Test
+    void savedSettingWinsOverWindowsButNotOverTheProperty() {
+        assertTrue(ThemeSysteme.choisirClair("", "clair", "Windows 11", () -> SOMBRE));
+        assertFalse(ThemeSysteme.choisirClair(null, "sombre", "Windows 11", () -> CLAIR));
+        assertFalse(ThemeSysteme.choisirClair("sombre", "clair", "Windows 11", () -> CLAIR));
+        // « auto » ou réglage inconnu : on suit Windows
+        assertTrue(ThemeSysteme.choisirClair(null, "auto", "Windows 11", () -> CLAIR));
+        assertFalse(ThemeSysteme.choisirClair(null, "bleu", "Windows 11", () -> SOMBRE));
+        assertFalse(ThemeSysteme.choisirClair(null, "auto", "Linux", () -> CLAIR));
+    }
+
+    @Test
     void followsWindowsOnlyOnWindows() {
         assertTrue(ThemeSysteme.choisirClair(null, "Windows 11", () -> CLAIR));
         assertFalse(ThemeSysteme.choisirClair("", "Windows 10", () -> SOMBRE));

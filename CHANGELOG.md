@@ -2,6 +2,9 @@
 
 ## Non publié
 
+### Thème réglable, copier et coller
+- Outils > Réglages : thème « Comme Windows », « Clair » ou « Sombre », pris au prochain démarrage ; `-Dkalkul.theme=clair|sombre` l'emporte toujours
+- Ctrl+C copie le nombre affiché (rien si l'écran montre une erreur) ; Ctrl+V colle un nombre pour continuer le calcul, espaces et virgule décimale acceptés, tout autre texte est ignoré
 ### Statistiques, export PDF et raccourcis
 - Statistiques étendues (Outils) : médiane, quartiles Q1 et Q3 (interpolation comme QUARTILE.INC), minimum, maximum, écarts-types d'échantillon et de population, et histogramme dont le nombre de classes suit la règle de Sturges
 - « Exporter en PDF… » dans l'onglet Historique : un PDF A4 en texte, paginé, avec la date d'édition ; écrit sans bibliothèque
