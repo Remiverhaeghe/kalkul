@@ -9,7 +9,7 @@ Calculatrice de bureau en Java Swing, avec un onglet par famille de calculs. Le 
 
 L'habillage, inspiré des calculatrices de bureau des années 70, est fait en Swing seul, sans bibliothèque de thème : thème Metal recoloré en noir mat (`Habillage`), touches rondes en relief colorées selon leur rôle, olive pour les opérateurs, moutarde pour « = » et orange pour l'effacement (`Touche`), écran à cristaux liquides gris-vert enfoncé dans son cadre, chiffres dessinés en sept segments avec les cases éteintes visibles, qui rétrécissent quand le nombre est trop long (`Ecran`, `SeptSegments`), onglets à plat soulignés de moutarde (`OngletsInstrument`), boutons de formulaire à plat et champs enfoncés comme l'écran (`BoutonPlat`). Une touche tapée au clavier s'allume aussi à l'écran ; un déclic de touche, fabriqué à la volée sans fichier son, s'active dans Outils > Réglages (`Declic`, `Reglages`). La courbe de l'onglet Graphique se trace sur le même fond que l'écran.
 
-Le thème suit Windows : si les applications sont en mode clair, Kalkul passe en clair (fond gris perle, afficheur façon cristaux liquides). On peut l'imposer au lancement avec `-Dkalkul.theme=clair` ou `-Dkalkul.theme=sombre`.
+Le thème suit Windows : si les applications sont en mode clair, Kalkul passe en clair (fond gris perle, afficheur façon cristaux liquides). On peut l'imposer au lancement avec `-Dkalkul.theme=clair` ou `-Dkalkul.theme=sombre`. Le choix « Comme Windows », « Clair » ou « Sombre » se garde dans Outils > Réglages et joue au démarrage suivant. Ctrl+C copie le nombre affiché, Ctrl+V colle un nombre.
 
 <img src="docs/theme-clair.png" alt="Onglet Base en thème clair : corps gris clair, touches de chiffres blanches, opérateurs olive" width="300">
 

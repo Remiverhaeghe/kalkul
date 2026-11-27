@@ -1,6 +1,9 @@
 package com.kalkul;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import org.junit.jupiter.api.Test;
 
@@ -130,6 +133,42 @@ class MoteurCalculTest {
         assertEquals("2", type("1", "0", "0", "log"));
         assertEquals("0", type("1", "ln"));
         assertEquals(MoteurCalcul.ERREUR, type("0", "ln"));
+    }
+
+    @Test
+    void pastedTextBecomesANumberOnlyWhenItIsOne() {
+        assertEquals("1234.5", MoteurCalcul.nombreDepuisTexte(" 1 234,5 "));
+        assertEquals("-3", MoteurCalcul.nombreDepuisTexte("-3"));
+        assertEquals("1200", MoteurCalcul.nombreDepuisTexte("1\u00A0200"));
+        assertNull(MoteurCalcul.nombreDepuisTexte("12abc"));
+        assertNull(MoteurCalcul.nombreDepuisTexte("Infinity"));
+        assertNull(MoteurCalcul.nombreDepuisTexte("1e999"));
+        assertNull(MoteurCalcul.nombreDepuisTexte(""));
+        assertNull(MoteurCalcul.nombreDepuisTexte(null));
+    }
+
+    @Test
+    void pastedNumberCanBeUsedInTheNextCalculation() {
+        MoteurCalcul vMoteur = new MoteurCalcul();
+        assertTrue(vMoteur.coller("12,5"));
+        assertEquals("12.5", vMoteur.texteACopier());
+        vMoteur.handleInput("+");
+        vMoteur.handleInput("2");
+        vMoteur.handleInput("=");
+        assertEquals("14.5", vMoteur.getDisplay());
+        // Un texte qui n'est pas un nombre ne change rien
+        assertFalse(vMoteur.coller("abc"));
+        assertEquals("14.5", vMoteur.getDisplay());
+    }
+
+    @Test
+    void nothingIsCopiedFromAnErrorScreen() {
+        MoteurCalcul vMoteur = new MoteurCalcul();
+        vMoteur.handleInput("1");
+        vMoteur.handleInput("/");
+        vMoteur.handleInput("0");
+        vMoteur.handleInput("=");
+        assertEquals("", vMoteur.texteACopier());
     }
 
     @Test

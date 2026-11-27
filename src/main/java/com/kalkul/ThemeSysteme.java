@@ -34,10 +34,21 @@ final class ThemeSysteme {
     }
 
     /**
-     * Thème clair ou non : la propriété l'emporte, puis le réglage de Windows ; sombre ailleurs.
+     * Thème clair ou non, sans réglage gardé : la propriété l'emporte, puis le réglage de Windows.
      */
     static boolean choisirClair(String pPropriete, String pSysteme, Supplier<String> pRegistre) {
-        String vChoix = pPropriete == null ? "" : pPropriete.trim().toLowerCase(Locale.ROOT);
+        boolean rClair = choisirClair(pPropriete, "auto", pSysteme, pRegistre);
+        return rClair;
+    }
+
+    /**
+     * Thème clair ou non : la propriété l'emporte, puis le réglage gardé dans Outils > Réglages
+     * («&nbsp;clair&nbsp;» ou «&nbsp;sombre&nbsp;»), puis le réglage de Windows ; sombre ailleurs.
+     */
+    static boolean choisirClair(String pPropriete, String pReglage, String pSysteme, Supplier<String> pRegistre) {
+        String vPropriete = pPropriete == null ? "" : pPropriete.trim().toLowerCase(Locale.ROOT);
+        String vReglage = pReglage == null ? "" : pReglage.trim().toLowerCase(Locale.ROOT);
+        String vChoix = "clair".equals(vPropriete) || "sombre".equals(vPropriete) ? vPropriete : vReglage;
         boolean rClair;
         if ("clair".equals(vChoix)) {
             rClair = true;
@@ -52,8 +63,8 @@ final class ThemeSysteme {
     }
 
     static boolean estClair() {
-        boolean rClair = choisirClair(System.getProperty(PROPRIETE), System.getProperty("os.name"),
-                ThemeSysteme::lireRegistre);
+        boolean rClair = choisirClair(System.getProperty(PROPRIETE), Reglages.theme(),
+                System.getProperty("os.name"), ThemeSysteme::lireRegistre);
         return rClair;
     }
 
